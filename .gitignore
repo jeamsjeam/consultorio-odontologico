@@ -1,0 +1,9 @@
+/Backend/src/__pycache__
+api/__pycache__
+drf/__pycache__
+/api/__pycache__
+/drf/__pycache__
+venv
+
+# Editor directories and files
+.pyc
