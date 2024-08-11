@@ -3,7 +3,13 @@ api/__pycache__
 drf/__pycache__
 /api/__pycache__
 /drf/__pycache__
+Backend/api/__pycache__
+Backend/drf/__pycache__
+/Backend/api/__pycache__
+/Backend/drf/__pycache__
 venv
+Backend/venv
+/Backend/venv
 
 # Editor directories and files
 .pyc
