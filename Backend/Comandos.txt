@@ -1,0 +1,23 @@
+Borrar carpeta venv
+Remove-Item -Recurse -Force venv
+
+Crear carpeta venv
+python -m venv venv
+
+Activar activate.bat
+.\venv\Scripts\Activate
+
+Quitar mensaje cada vez que se ejecuta el activate.bat
+Unblock-File -Path "C:\Users...."
+
+Instalar requerimientos despues de crear la carpeta venv
+pip install -r requirements.txt
+
+Generar archivo de requerimientos
+pip freeze > requirements.txt
+
+Arrancar la api REST
+python run.py
+
+actualizar pip
+python -m pip install --upgrade pip
