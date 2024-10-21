@@ -8,7 +8,8 @@ Activar activate.bat
 .\venv\Scripts\Activate
 
 Quitar mensaje cada vez que se ejecuta el activate.bat
-Unblock-File -Path "C:\Users...."
+Unblock-File -Path "C:\repos\consultorio-odontologico\Backend"
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 Instalar requerimientos despues de crear la carpeta venv
 pip install -r requirements.txt

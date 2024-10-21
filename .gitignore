@@ -1,15 +1,11 @@
 /Backend/src/__pycache__
-api/__pycache__
-drf/__pycache__
-/api/__pycache__
-/drf/__pycache__
-Backend/api/__pycache__
-Backend/drf/__pycache__
-/Backend/api/__pycache__
-/Backend/drf/__pycache__
-venv
-Backend/venv
+/Backend/src/calls/__pycache__
+/Backend/src/models/__pycache__
+/Backend/src/routes/__pycache__
+/Backend/src/schemas/__pycache__
+/Backend/src/services/__pycache__
 /Backend/venv
 
 # Editor directories and files
 .pyc
+.cpython-312.pyc

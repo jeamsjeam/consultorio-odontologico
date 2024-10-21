@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 
 #postgresql://postgres:admin@localhost:5432/ipasme
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root@localhost:3306/ipasprueba"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root@localhost:3306/consultorio"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # create the application database instance
