@@ -9,6 +9,7 @@ class Usuario(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     contrasena = db.Column(db.String(255), nullable=False)
     estado = db.Column(db.Boolean, default=True)  # Estado del usuario (True=activo, False=desactivado)
+    rolId = db.Column(db.BigInteger(), db.ForeignKey('rol.Id'))
 
     persona = relationship('Persona', backref='usuario')
 

@@ -7,7 +7,7 @@ class Rol(db.Model):
     Id = db.Column(db.BigInteger(), primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
 
-    usuario_roles = relationship('UsuarioRol', backref='rol')
+    usuario = relationship('Usuario', backref='rol')
 
     def __init__(self, nombre):
         self.nombre = nombre

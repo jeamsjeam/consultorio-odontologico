@@ -13,5 +13,5 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from .models import cita, estado_cita, estado, municipio, pais, persona, rol, servicio, tipo_persona, usuario_rol, usuario 
+from .models import cita, estado_cita, estado, municipio, pais, persona, rol, servicio, tipo_persona, usuario 
 from .routes import rolesController
