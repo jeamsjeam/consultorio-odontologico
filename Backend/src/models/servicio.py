@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, backref
 class Servicio(db.Model):
     __tablename__ = 'servicio'
 
-    Id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.BigInteger(), primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
     costo = db.Column(db.Numeric(10, 2), nullable=False)
     descripcion = db.Column(db.String(150))

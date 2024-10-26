@@ -8,7 +8,7 @@ class UsuarioSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Usuario
         #load_instance = True
-    Id = ma.auto_field()
+    id = ma.auto_field()
     usuario = ma.auto_field()
     clave = ma.auto_field()
     estado = ma.auto_field()

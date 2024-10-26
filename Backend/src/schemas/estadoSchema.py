@@ -8,7 +8,7 @@ class EstadoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Estado
         #load_instance = True
-    Id = ma.auto_field()
+    id = ma.auto_field()
     nombre = ma.auto_field()
     pais = ma.Nested('PaisSchema')
 

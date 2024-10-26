@@ -8,7 +8,7 @@ class PersonaSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Persona
         #load_instance = True
-    Id = ma.auto_field()
+    id = ma.auto_field()
     cedula = ma.auto_field()
     nombre = ma.auto_field()
     apellido = ma.auto_field()
@@ -19,7 +19,7 @@ class PersonaSchema(ma.SQLAlchemyAutoSchema):
     usuarioId = ma.auto_field()
     usuario = ma.Nested('UsuarioSchema')
     municipio = ma.Nested('MunicipioSchema')
-    tipoPersona = ma.Nested('TipoPersonaSchema')
+    tipo_persona = ma.Nested('TipoPersonaSchema')
 
 persona_schema = PersonaSchema()
 personas_schema = PersonaSchema(many=True)

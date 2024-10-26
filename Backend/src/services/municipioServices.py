@@ -1,6 +1,6 @@
 from ..calls.municioCalls import MunicipioCalls
 
-class RolServices:
+class MunicipioServices:
     def ObtenerMunicipios():
         return MunicipioCalls.ObtenerMunicipios()
 

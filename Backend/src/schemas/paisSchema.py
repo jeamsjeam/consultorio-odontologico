@@ -8,7 +8,7 @@ class PaisSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Pais
         #load_instance = True
-    Id = ma.auto_field()
+    id = ma.auto_field()
     nombre = ma.auto_field()
 
 pais_schema = PaisSchema()

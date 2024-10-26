@@ -8,7 +8,7 @@ class MunicipioSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Municipio
         #load_instance = True
-    Id = ma.auto_field()
+    id = ma.auto_field()
     nombre = ma.auto_field()
     estado = ma.Nested('EstadoSchema')
 

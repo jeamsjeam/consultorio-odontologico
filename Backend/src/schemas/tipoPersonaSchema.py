@@ -8,7 +8,7 @@ class TipoPersonaSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = TipoPersona
         load_instance = True
-    # Id = ma.auto_field()
+    # id = ma.auto_field()
     # nombre = ma.auto_field()
 
 tipoPersona_schema = TipoPersonaSchema()
