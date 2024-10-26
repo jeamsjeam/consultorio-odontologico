@@ -2,10 +2,17 @@ from src import app
 from flask_marshmallow import Marshmallow
 from ..models.usuario  import Usuario
 
-class UsuarioSchema(Marshmallow(app).SQLAlchemyAutoSchema):
+ma = Marshmallow(app)
+
+class UsuarioSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Usuario
-        load_instance = True
+        #load_instance = True
+    Id = ma.auto_field()
+    usuario = ma.auto_field()
+    clave = ma.auto_field()
+    estado = ma.auto_field()
+    rol = ma.Nested('RolSchema')
 
-Usuario_schema = UsuarioSchema()
-Usuarios_schema = UsuarioSchema(many=True)
+usuario_schema = UsuarioSchema()
+usuarios_schema = UsuarioSchema(many=True)

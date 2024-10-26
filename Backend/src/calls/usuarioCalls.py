@@ -5,7 +5,7 @@ from sqlalchemy import and_
 class UsuarioCalls():
 
     def ObtenerUsuarios():
-        return sorted(Usuario.query.all(), key=lambda x: x.nombre)
+        return Usuario.query.all()
 
     def AutenticarUsuario(datos):
         return Usuario.query.filter(and_(Usuario.usuario == datos.usuario, Usuario.clave == datos.clave)).first()
@@ -17,14 +17,14 @@ class UsuarioCalls():
             if existe is not None:
                 raise Exception(f"Usuario ya existe")
             
-            empleadoNuevo = Usuario(usuario=datos.usuario, 
+            nuevo = Usuario(usuario=datos.usuario, 
                                     clave=datos.clave, 
                                     rolId=datos.rolId, 
                                     estado=True)
-            db.session.add(empleadoNuevo)
+            db.session.add(nuevo)
             db.session.commit()
-            db.session.refresh(empleadoNuevo)
-            return empleadoNuevo
+            db.session.refresh(nuevo)
+            return nuevo
         
         except Exception as e:
             db.session.rollback()

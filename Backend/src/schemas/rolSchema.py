@@ -2,7 +2,9 @@ from src import app
 from flask_marshmallow import Marshmallow
 from ..models.rol  import Rol
 
-class RolSchema(Marshmallow(app).SQLAlchemyAutoSchema):
+ma = Marshmallow(app)
+
+class RolSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Rol
         load_instance = True
