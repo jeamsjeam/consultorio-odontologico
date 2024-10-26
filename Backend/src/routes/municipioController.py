@@ -17,7 +17,13 @@ def ObtenerMunicipioPorId(id):
     respuesta = MunicipioServices.ObtenerMunicipioPorId(id)
     return CustomJsonify(respuesta, municipio_schema, municipios_schema)
 
-@app.route('/municipio/<string:nombre>', methods=['GET'])
+@app.route('/municipio/PorEstado/<int:estadoId>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ObtenermunicipioPorEstadoId(estadoId):
+    respuesta = MunicipioServices.ObtenermunicipioPorEstadoId(estadoId)
+    return CustomJsonify(respuesta, municipio_schema, municipios_schema)
+
+@app.route('/municipio/PorNombre/<string:nombre>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def ObtenerMunicipioPorNombre(nombre):
     respuesta = MunicipioServices.ObtenerMunicipioPorNombre(nombre)

@@ -17,7 +17,13 @@ def ObtenerEstadoPorId(id):
     respuesta = EstadoServices.ObtenerEstadoPorId(id)
     return CustomJsonify(respuesta, estado_schema, estados_schema)
 
-@app.route('/estado/<string:nombre>', methods=['GET'])
+@app.route('/estado/PorPais/<int:paisId>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ObtenerEstadoPorPaisId(paisId):
+    respuesta = EstadoServices.ObtenerEstadoPorPaisId(paisId)
+    return CustomJsonify(respuesta, estado_schema, estados_schema)
+
+@app.route('/estado/PorNombre/<string:nombre>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def ObtenerEstadoPorNombre(nombre):
     respuesta = EstadoServices.ObtenerEstadoPorNombre(nombre)

@@ -7,5 +7,8 @@ class EstadoServices:
     def ObtenerEstadoPorId(id):
         return EstadoCalls.ObtenerEstadoPorId(id)
     
+    def ObtenerEstadoPorPaisId(nombre):
+        return EstadoCalls.ObtenerEstadoPorPaisId(nombre)
+    
     def ObtenerEstadoPorNombre(nombre):
         return EstadoCalls.ObtenerEstadoPorNombre(nombre)

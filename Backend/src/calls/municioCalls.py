@@ -8,6 +8,9 @@ class MunicipioCalls():
     def ObtenerMunicipioPorId(id):
         return Municipio.query.get(id)
     
+    def ObtenermunicipioPorEstadoId(estadoId):
+        return Municipio.query.filter_by(estadoId=estadoId).all()
+    
     def ObtenerMunicipioPorNombre(nombre):
         return Municipio.query.filter_by(nombre=nombre).first()
 

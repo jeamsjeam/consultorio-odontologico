@@ -8,6 +8,9 @@ class EstadoCalls():
     def ObtenerEstadoPorId(id):
         return Estado.query.get(id)
     
+    def ObtenerEstadoPorPaisId(paisId):
+        return Estado.query.filter_by(paisId=paisId).all()
+    
     def ObtenerEstadoPorNombre(nombre):
         return Estado.query.filter_by(nombre=nombre).first()
 

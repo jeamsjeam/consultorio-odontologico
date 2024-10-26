@@ -17,7 +17,7 @@ def ObtenerTipoPersonaPorId(id):
     respuesta = TipoPersonaServices.ObtenerTipoPersonaPorId(id)
     return CustomJsonify(respuesta, tipoPersona_schema, tipoPersonas_schema)
 
-@app.route('/tipoPersona/<string:nombre>', methods=['GET'])
+@app.route('/tipoPersona/PorNombre/<string:nombre>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def ObtenerTipoPersonaPorNombre(nombre):
     respuesta = TipoPersonaServices.ObtenerTipoPersonaPorNombre(nombre)
