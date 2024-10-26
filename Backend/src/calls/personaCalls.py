@@ -12,11 +12,6 @@ class PersonaCalls():
     
     def CrearPersona(datos):
         try:
-            existe = Persona.query.filter(Persona.cedula == datos.cedula).first()
-            
-            if existe is not None:
-                raise Exception(f"Persona registrada")
-            
             nuevo = Persona(nombre=datos.nombre, 
                             apellido=datos.apellido, 
                             cedula=datos.cedula, 
