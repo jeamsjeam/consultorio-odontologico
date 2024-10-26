@@ -1,19 +1,18 @@
-from ..calls.rolesCalls import RolesCalls
-from ..models.rol import Rol
+from ..calls.rolCalls import RolCalls
 
 class RolServices:
     def ObtenerRoles():
-        return RolesCalls.ObtenerRoles()
+        return RolCalls.ObtenerRoles()
+
+    def ObtenerRolPorId(id):
+        return RolCalls.ObtenerRolPorId(id)
     
     def PermiteCrear(id):
-        rol = RolesCalls.ObtenerRolPorId(id)
+        rol = RolCalls.ObtenerRolPorId(id)
         if rol.nombre.upper().find('ADMINISTRADOR') != -1:
             return True
         else:
             return False
     
-    def ObtenerRolPorId(id):
-        return RolesCalls.ObtenerRolPorId(id)
-    
     def ObtenerRolPorNombre(nombre):
-        return RolesCalls.ObtenerRolPorNombre(nombre)
+        return RolCalls.ObtenerRolPorNombre(nombre)

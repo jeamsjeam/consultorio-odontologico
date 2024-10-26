@@ -1,6 +1,6 @@
 from ..models.rol import Rol
 
-class RolesCalls():
+class RolCalls():
 
     def ObtenerRoles():
         return sorted(Rol.query.all(), key=lambda x: x.nombre)

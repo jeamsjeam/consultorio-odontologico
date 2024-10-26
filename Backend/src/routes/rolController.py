@@ -1,23 +1,18 @@
 from flask import Blueprint, request, jsonify, make_response
+from ..viewModels.customJsonify import CustomJsonify
 from src import app
 from ..services.rolServices import RolServices
 from ..schemas.rolSchema import roles_schema,rol_schema
 from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 
-@app.route('/roles', methods=['GET'])
+@app.route('/rol', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def ObtenerRoles():
     respuesta = RolServices.ObtenerRoles()
-    if respuesta is not None:
-        return roles_schema.dump(respuesta)
-    else:
-        return jsonify(None)
+    return CustomJsonify(respuesta, rol_schema, roles_schema)
 
-@app.route('/roles/<int:id>', methods=['GET'])
+@app.route('/rol/<int:id>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def ObtenerRolPorId(id):
     respuesta = RolServices.ObtenerRolPorId(id)
-    if respuesta is not None:
-        return rol_schema.dump(respuesta)
-    else:
-        return jsonify(None)
+    return CustomJsonify(respuesta, rol_schema, roles_schema)
