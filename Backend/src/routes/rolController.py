@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response
 from ..viewModels.customJsonify import CustomJsonify
 from src import app
 from ..services.rolServices import RolServices
-from ..schemas.rolSchema import roles_schema,rol_schema
+from ..schemas.rolSchema import rol_schema, roles_schema
 from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 
 @app.route('/rol', methods=['GET'])

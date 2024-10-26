@@ -10,7 +10,7 @@ class MunicipioSchema(ma.SQLAlchemyAutoSchema):
         #load_instance = True
     Id = ma.auto_field()
     nombre = ma.auto_field()
-    rol = ma.Nested('EstadoSchema')
+    estado = ma.Nested('EstadoSchema')
 
 municipio_schema = MunicipioSchema()
 municipios_schema = MunicipioSchema(many=True)

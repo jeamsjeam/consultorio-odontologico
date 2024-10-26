@@ -10,7 +10,7 @@ class EstadoSchema(ma.SQLAlchemyAutoSchema):
         #load_instance = True
     Id = ma.auto_field()
     nombre = ma.auto_field()
-    rol = ma.Nested('PaisSchema')
+    pais = ma.Nested('PaisSchema')
 
 estado_schema = EstadoSchema()
 estados_schema = EstadoSchema(many=True)
