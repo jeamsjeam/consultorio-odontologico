@@ -14,6 +14,8 @@ class Persona(db.Model):
     tipoPersonaId = db.Column(db.BigInteger(), db.ForeignKey('tipo_persona.id'))
     usuarioId = db.Column(db.BigInteger(), db.ForeignKey('usuario.id'))
     
+    citas = relationship('Cita', backref='persona')
+
     def __init__(self, nombre, apellido, cedula, telefono, direccion, municipioId, tipoPersonaId, usuarioId):
         self.nombre = nombre
         self.apellido = apellido

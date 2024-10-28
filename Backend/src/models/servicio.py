@@ -7,8 +7,10 @@ class Servicio(db.Model):
     id = db.Column(db.BigInteger(), primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
     costo = db.Column(db.Numeric(10, 2), nullable=False)
-    descripcion = db.Column(db.String(150))
+    descripcion = db.Column(db.String(250))
     estado = db.Column(db.Boolean, default=True)  # Estado del servicio (True=activo, False=desactivado)
+
+    citas = relationship('Cita', backref='servicio')
 
     def __init__(self, nombre, costo, descripcion, estado=True):
         self.nombre = nombre

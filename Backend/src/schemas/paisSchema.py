@@ -7,9 +7,7 @@ ma = Marshmallow(app)
 class PaisSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Pais
-        #load_instance = True
-    id = ma.auto_field()
-    nombre = ma.auto_field()
+        load_instance = True
 
 pais_schema = PaisSchema()
 paises_schema = PaisSchema(many=True)
