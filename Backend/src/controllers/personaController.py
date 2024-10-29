@@ -24,3 +24,9 @@ def ObtenerPersonaPorCedula(cedula):
 def CrearPersona():
     respuesta = PersonaServices.CrearPersona(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
     return CustomJsonify(respuesta, persona_schema, personas_schema)
+
+@app.route('/persona/ActualizarPersona', methods=['PUT'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ActualizarPersona():
+    respuesta = PersonaServices.ActualizarPersona(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
+    return CustomJsonify(respuesta, persona_schema, personas_schema)
