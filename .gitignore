@@ -1,0 +1,13 @@
+/Backend/src/__pycache__
+/Backend/src/calls/__pycache__
+/Backend/src/models/__pycache__
+/Backend/src/routes/__pycache__
+/Backend/src/schemas/__pycache__
+/Backend/src/services/__pycache__
+/Backend/src/controllers/__pycache__
+/Backend/src/viewModels/__pycache__
+/Backend/venv
+
+# Editor directories and files
+.pyc
+.cpython-312.pyc
