@@ -9,5 +9,5 @@ class TipoPersonaCalls():
         return TipoPersona.query.get(id)
     
     def ObtenerTipoPersonaPorNombre(nombre):
-        return TipoPersona.query.filter_by(nombre=nombre).first()
+        return TipoPersona.query.filter(TipoPersona.nombre == nombre).first()
 

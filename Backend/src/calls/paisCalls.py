@@ -9,5 +9,5 @@ class PaisCalls():
         return Pais.query.get(id)
     
     def ObtenerPaisPorNombre(nombre):
-        return Pais.query.filter_by(nombre=nombre).first()
+        return Pais.query.filter(Pais.nombre == nombre).first()
 

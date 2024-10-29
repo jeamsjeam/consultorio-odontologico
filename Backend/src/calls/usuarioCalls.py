@@ -1,6 +1,6 @@
 from ..models.usuario import Usuario
 from src import db
-from sqlalchemy import and_
+from sqlalchemy import and_, or_, not_
 
 class UsuarioCalls():
 
@@ -10,6 +10,9 @@ class UsuarioCalls():
     def AutenticarUsuario(datos):
         return Usuario.query.filter(and_(Usuario.usuario == datos.usuario, Usuario.clave == datos.clave)).first()
     
+    def ObtenerUsuarioPorUsuario(usuario):
+        return Usuario.query.filter(Usuario.usuario == usuario).first()
+
     def CrearUsuario(datos):
         try:
             existe = Usuario.query.filter(Usuario.usuario == datos.usuario).first()

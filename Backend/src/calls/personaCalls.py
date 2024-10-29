@@ -1,6 +1,6 @@
 from ..models.persona import Persona
 from src import db
-from sqlalchemy import and_
+from sqlalchemy import and_, or_, not_
 
 class PersonaCalls():
 

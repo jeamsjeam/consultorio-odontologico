@@ -9,5 +9,5 @@ class RolCalls():
         return Rol.query.get(id)
     
     def ObtenerRolPorNombre(nombre):
-        return Rol.query.filter_by(nombre=nombre).first()
+        return Rol.query.filter(Rol.nombre == nombre).first()
 

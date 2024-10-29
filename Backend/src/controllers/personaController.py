@@ -7,7 +7,6 @@ from ..schemas.personaSchema import persona_schema,personas_schema
 from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 import json
 
-
 @app.route('/persona', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def ObtenerPersonas():

@@ -14,4 +14,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from .models import fecha, cita, tipo_persona, estado_cita, estado, municipio, pais, persona, rol, servicio, usuario 
-from .controllers import rolController, tipoPersonaController, paisController, estadoController, municipioController, usuarioController, personaController, citaController 
+from .controllers import rolController, estadoCitaController, fechaController, tipoPersonaController, paisController, estadoController, municipioController, usuarioController, personaController, citaController 

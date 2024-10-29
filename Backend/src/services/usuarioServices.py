@@ -1,5 +1,4 @@
 from ..calls.usuarioCalls import UsuarioCalls
-from ..models.usuario import Usuario
 
 class UsuarioServices:
     def ObtenerUsuarios():
@@ -9,4 +8,14 @@ class UsuarioServices:
         return UsuarioCalls.AutenticarUsuario(datos)
     
     def CrearUsuario(datos):
-        return UsuarioCalls.CrearUsuario(datos)
+        try:
+            existe = UsuarioCalls.ObtenerUsuarioPorUsuario(datos.usuario)
+            if existe is not None:
+                    raise Exception(f"Usuario registrado")
+                
+            return UsuarioCalls.CrearUsuario(datos)
+        except Exception as e:
+                print(f"Error al insertar usuario: {e}")
+                raise Exception(f"Error al insertar usuario: {e}")
+    
+    
