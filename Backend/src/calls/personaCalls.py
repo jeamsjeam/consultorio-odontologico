@@ -12,11 +12,8 @@ class PersonaCalls():
         
     def CrearPersona(datos):
         try:
-            # Filtrar solo los atributos válidos para el modelo Persona
-            atributos_validos = {key: value for key, value in datos.__dict__.items() if hasattr(Persona, key) and value is not None}
-
             # Crear una instancia de Persona con los atributos filtrados
-            nuevo = Persona(**atributos_validos)
+            nuevo = Persona(**datos)
             db.session.add(nuevo)
             db.session.commit()
             db.session.refresh(nuevo)
@@ -27,13 +24,8 @@ class PersonaCalls():
             print(f"Error al insertar persona: {e}")
             raise Exception(f"Error al insertar persona: {e}")
 
-    def ActualizarPersona(consulta, datos):
+    def ActualizarPersona(consulta):
         try:
-            # Recorrer todos los atributos de 'datos' y asignarlos si existen en consulta, excluyendo 'id'
-            for key, value in datos.__dict__.items():
-                if key != 'id' and hasattr(consulta, key) and value is not None:
-                    setattr(consulta, key, value)
-
             # Guardar los cambios
             db.session.commit()
             db.session.refresh(consulta)
