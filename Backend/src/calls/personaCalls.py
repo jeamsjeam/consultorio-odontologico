@@ -10,10 +10,8 @@ class PersonaCalls():
     def ObtenerPersonaPorCedula(cedula):
         return Persona.query.filter(Persona.cedula == cedula).first()
         
-    def CrearPersona(datos):
+    def CrearPersona(nuevo):
         try:
-            # Crear una instancia de Persona con los atributos filtrados
-            nuevo = Persona(**datos)
             db.session.add(nuevo)
             db.session.commit()
             db.session.refresh(nuevo)
