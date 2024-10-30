@@ -10,14 +10,17 @@ class PersonaServices:
     
     def CrearPersona(datos):
         try:
+            # Se verifica si existe un registro con la misma cedula
             existe = PersonaCalls.ObtenerPersonaPorCedula(datos.cedula)
             if existe is not None:
-                    raise Exception(f"Persona registrada")
+                raise Exception(f"Persona registrada")
                 
              # Filtrar solo los atributos válidos para el modelo Persona
             atributosValidos = {key: value for key, value in datos.__dict__.items() if hasattr(Persona, key) and value is not None}
+            
             # Crear una instancia de Persona con los atributos filtrados
-            nuevo = Persona(**datos)
+            nuevo = Persona(**atributosValidos)
+
             return PersonaCalls.CrearPersona(nuevo)
         except Exception as e:
             print(f"Error al insertar persona: {e}")
@@ -26,17 +29,17 @@ class PersonaServices:
     def ActualizarPersona(datos):
         try:
             # Validar que el id esté presente, no sea None y sea positivo
-            if not hasattr(datos, 'id') or datos.id is None or datos.id < 0:
-                raise Exception("ID de la persona no proporcionado o inválido")
+            if not hasattr(datos, 'cedula') or datos.cedula is None or datos.cedula < 0:
+                raise Exception("Cedula de la persona no proporcionado o inválido")
 
             # Comprobar que la persona exista en la base de datos
-            consulta = Persona.query.get(datos.id)
+            consulta = PersonaCalls.ObtenerPersonaPorCedula(datos.cedula)
             if not consulta:
                 raise Exception("Persona no encontrada")
             
             # Recorrer todos los atributos de 'datos' y asignarlos si existen en consulta, excluyendo 'id'
             for key, value in datos.__dict__.items():
-                if key != 'id' and hasattr(consulta, key) and value is not None:
+                if key != 'id' and key != 'cedula' and hasattr(consulta, key) and value is not None:
                     setattr(consulta, key, value)
 
             # Llamar a la función de actualización si la validación es exitosa

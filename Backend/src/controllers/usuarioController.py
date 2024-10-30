@@ -24,3 +24,9 @@ def AutenticarUsuario():
 def CrearUsuario():
     respuesta = UsuarioServices.CrearUsuario(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
     return CustomJsonify(respuesta, usuario_schema, usuarios_schema)
+
+@app.route('/usuario/ActualizarUsuario', methods=['PUT'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ActualizarUsuario():
+    respuesta = UsuarioServices.ActualizarUsuario(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
+    return CustomJsonify(respuesta, usuario_schema, usuarios_schema)

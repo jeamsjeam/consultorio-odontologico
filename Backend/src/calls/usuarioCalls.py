@@ -6,6 +6,9 @@ class UsuarioCalls():
 
     def ObtenerUsuarios():
         return Usuario.query.all()
+    
+    def ObtenerUsuarioPorId(id):
+        return Usuario.query.get(id)
 
     def AutenticarUsuario(datos):
         return Usuario.query.filter(and_(Usuario.usuario == datos.usuario, Usuario.clave == datos.clave)).first()
@@ -15,22 +18,24 @@ class UsuarioCalls():
 
     def CrearUsuario(datos):
         try:
-            existe = Usuario.query.filter(Usuario.usuario == datos.usuario).first()
-            
-            if existe is not None:
-                raise Exception(f"Usuario ya existe")
-            
-            nuevo = Usuario(usuario=datos.usuario, 
-                                    clave=datos.clave, 
-                                    rolId=datos.rolId, 
-                                    estado=True)
-            db.session.add(nuevo)
+            db.session.add(datos)
             db.session.commit()
-            db.session.refresh(nuevo)
-            return nuevo
+            db.session.refresh(datos)
+            return datos
         
         except Exception as e:
             db.session.rollback()
             print(f"Error al insertar usuario: {e}")
             raise Exception(f"Error al insertar usuario: {e}")
 
+    def ActualizarUsuario(datos):
+        try:
+            # Guardar los cambios
+            db.session.commit()
+            db.session.refresh(datos)
+            return datos
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error al actualizar usuario: {e}")
+            raise Exception(f"Error al actualizar usuario: {e}")
