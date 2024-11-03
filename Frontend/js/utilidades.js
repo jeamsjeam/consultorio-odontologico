@@ -80,15 +80,14 @@ function Loading(bandera){
     });
 }
 
-// Funcion para consultar a los archivos php
-// tabla: el nombre de la tabla, que es el mismo que el archivo php respectivo
+// Funcion para consultar api rest
+// ruta: Ruta del servicio a consultar
 // metodo: es el metodo por el cual se va a consultar 
 // datos: son los datos que se van a enviar a la consulta
-async function consultar(tabla,metodo,datos) {
-    debugger
+async function consultar(ruta,metodo,datos) {
     try {    
         // Se crea la url y se consulta con fetch
-        let url = 'http://localhost:8000/api/v1/' + tabla
+        let url = 'http://127.0.0.1:5000/' + ruta
         const response = await fetch(url, metodo.toUpperCase() !== 'GET' ? 
             {
                 method: metodo.toUpperCase(),
@@ -101,10 +100,8 @@ async function consultar(tabla,metodo,datos) {
                 method: 'GET'
             } 
         );
-        debugger
         return await response.json();
     } catch (error) {
-        debugger
         console.error('Error:', error);
     }
 }
@@ -170,11 +167,11 @@ function formatoDecimalString(valor) {
 }
 
 // Funcion que sirve para cargar los select
-// tabla: el nombre de la tabla, que es el mismo que el archivo php respectivo
+// ruta: Ruta del servicio
 // idSelect: el id del select que se quiere llenar
 // error: mensaje personalizado en caso de que ocurra un error
 // datos: datos para llenar el select, son opcionales si se envian no se consulta la base de datos
-async function ObtenerSelect(tabla, idSelect, error, datos) {
+async function ObtenerSelect(ruta, idSelect, error, datos) {
 	try{
 
         // Se obtiene el select y se limpia
@@ -191,7 +188,7 @@ async function ObtenerSelect(tabla, idSelect, error, datos) {
                 select.appendChild(option);
             });
         }else{
-            let data = await consultar(tabla, 'GET', {});
+            let data = await consultar(ruta, 'GET', {});
             if(data !== null && typeof data !== 'undefined'){
                 data.forEach(s => {
                     // Creamos una opción para cada select

@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-
-	// Se comprueba en que pantalla esta, para realizar diferentes acciones
-	// Como cargar el select de roles o 
-	// Verificar si existe usuarioRegistrado para mostrar una notificacion en verde
-	/*if (window.location.href.indexOf('registro.html') !== -1) {
-        await ObtenerSelect("roles", "roles-select", "rol");
-    }else */if (window.location.href.indexOf('login.html') !== -1){
+	if (window.location.href.indexOf('login.html') !== -1){
 		let usuarioRegistrado = JSON.parse(localStorage.getItem('usuarioRegistrado'))
 		if(typeof usuarioRegistrado !== 'undefined' &&  usuarioRegistrado !== null && typeof usuarioRegistrado.usuario !== 'undefined' && usuarioRegistrado.usuario !== null){
 			mostrarNotificacion("Usuario " + usuarioRegistrado.usuario + " registrado!","linear-gradient(to right, #00b09b, #96c93d)") 
@@ -39,34 +33,36 @@ document.addEventListener('DOMContentLoaded', async function() {
 async function verificarUsuario() {
 	try{
 
-		let ruta = 'usuario/?usuario=' + document.getElementById("usuario").value + '&clave=' + document.getElementById("clave").value
+		let usuario = document.getElementById("usuario")
+		let clave = document.getElementById("clave")
 
-		document.getElementById("usuario").value = ''
-		document.getElementById("clave").value = ''
-
-		debugger
-
-		let datos = await consultar(ruta, 'GET', null); // Se deben cambiar los servicios para que si se encuentra 1 retorne solo 1
-		debugger
-		if(datos !== null && typeof datos !== 'undefined' && datos.length > 0){
-			let data = datos[0]
-
-			mostrarNotificacion("Usuario: " + data.usuario,"linear-gradient(to right, #00b09b, #96c93d)") 
-			
-			// Se crea en el sessionStorage el usuario y se redirige al index
-			let usuario = {
-				usuario: data.usuario,
-				/*rol: data.rolnombre,*/
-				rolId: data.rol_id,
-				id: data.id
-			}
-			sessionStorage.setItem('usuario', JSON.stringify(usuario))
-			localStorage.setItem('usuarioLogeado', JSON.stringify(usuario))
-			window.location.href = "index.html";
-			
-		}else{
-			mostrarNotificacion("No se encontro ningun usuario","#FF0000") 
+		const objeto = {
+			usuario: usuario.value,
+			clave: clave.value
 		}
+
+		usuario.value = ''
+		clave.value = ''
+
+		let datos = await consultar('usuario/AutenticarUsuario', 'POST', objeto); 
+
+		if(typeof datos === 'undefined' || datos === null){
+			mostrarNotificacion("No se encontro ningun usuario","#FF0000") 
+			return
+		}
+
+		// Se crea en el sessionStorage el usuario y se redirige al index
+		const usuarioLogeado = {
+			id: datos.id,
+			usuario: datos.usuario,
+			rol: datos.rol,
+		}
+
+		sessionStorage.setItem('usuario', JSON.stringify(usuarioLogeado))
+		localStorage.setItem('usuarioLogeado', JSON.stringify(usuarioLogeado))
+		window.location.href = "index.html";
+			
+		
 	}catch(e){
 		mostrarNotificacion("Error: " + e,"#FF0000")  
 		console.error('Error:', e);
@@ -76,42 +72,39 @@ async function verificarUsuario() {
 // Funcion para crear usuario
 async function crearUsuario() {
 	try{
-		let datosEnvio = {
-			usuario: document.getElementById("usuario").value,
-			clave: document.getElementById("clave").value,
-			correo: document.getElementById("correo").value,
-			rol: document.querySelector('select[name="rol"]').selectedOptions[0].value,
-			estado: true
+
+		let usuario = document.getElementById("usuario")
+		let clave = document.getElementById("clave")
+		let repetirClave = document.getElementById("repetirClave")
+
+		if(clave.value !== repetirClave.value){
+			mostrarNotificacion("Las contraseñas no coiciden","#FF0000") 
+			return;
 		}
 
-		let ruta = 'usuario/?usuario=' + document.getElementById("usuarioAdministrador").value + '&clave=' + document.getElementById("claveAdministrador").value
+		let objeto = {
+			usuario: usuario.value,
+			clave: clave.value,
+			rolId: 2
+		}
 
-		document.getElementById("usuario").value = ''
-		document.getElementById("clave").value = ''
-		document.getElementById("correo").value = ''
-		document.querySelector('select[name="rol"]').value = 1
-		document.getElementById("usuarioAdministrador").value = ''
-		document.getElementById("claveAdministrador").value = ''
+		usuario.value = ''
+		clave.value = ''
+		repetirClave.value = ''
 
-		let datos = await consultar(ruta, 'GET', null);
-		if(datos === null || typeof datos === 'undefined' || datos.length === 0){
-			mostrarNotificacion("No se encontro el usuario administrador","#FF0000") 
+		let datos = await consultar('usuario/CrearUsuario', 'POST', objeto);
+
+		if(datos === null || typeof datos === 'undefined'){
+			mostrarNotificacion("Error al crear el usuario","#FF0000") 
 			return
 		}
-		let data = await consultar("usuario/", 'POST', datosEnvio);
 
-		if(data !== null && typeof data !== 'undefined'){
-			// Se guarda en el localStorage el objeto usuarioRegistrado y se redirige al login
-			let usuarioRegistrado = {
-				usuario: data.usuario
-			}
-			localStorage.setItem('usuarioRegistrado', JSON.stringify(usuarioRegistrado))
-			//mostrarNotificacion("Usuario: " + data.usuario,"linear-gradient(to right, #00b09b, #96c93d)") 
-			window.location.href = "login.html";
-			
-		}else{
-			mostrarNotificacion("Error al crear el usuario","#FF0000") 
+		// Se guarda en el localStorage el objeto usuarioRegistrado y se redirige al login
+		let usuarioRegistrado = {
+			usuario: datos.usuario
 		}
+		localStorage.setItem('usuarioRegistrado', JSON.stringify(usuarioRegistrado))
+		window.location.href = "login.html";
 	}catch(e){
 		mostrarNotificacion("Error: " + e,"#FF0000")  
 		console.error('Error:', e);
