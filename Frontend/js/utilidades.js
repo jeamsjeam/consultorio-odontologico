@@ -212,17 +212,29 @@ async function ObtenerSelect(ruta, idSelect, error, datos) {
 function CargarNavbar(pagina){
     document.getElementById("navbar").innerHTML = `
                     <div  class="container-fluid">
-                        <div class="navbar-brand">Comercializadora</div>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
+                           <a class="navbar-brand p-1" href="#" style="background-color: #ba87ca; border-radius: 5px !important;">
+                                <img style="border-radius: 5px !important;" src="imagenes/IMG-20240810-WA0005.png" alt="" width="80" class="d-inline-block align-text-top">
+                                Menu
+                                </a>
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li class="nav-item">
+                                    <li class="nav-item mx-1">
                                         <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Inicio</a>
                                     </li>
+                                    <li class="nav-item mx-1">
+                                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Quienes somos</a>
+                                    </li>
+                                    <li class="nav-item mx-1">
+                                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Servicios</a>
+                                    </li>
+                                    <li class="nav-item mx-1">
+                                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Consejos deltal</a>
+                                    </li>
+                                    <li class="nav-item mx-1" style="background-color: #4d0aa7; border-radius: 10px !important;">
+                                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" style="color: white !important;" href="index.html">RESERVACION DE CITAS</a>
+                                    </li>
                                 </ul>
-                                <a type="button" class="btn btn-dark" href="login.html">Cerrar Sesion</a>
+                                <a type="button" class="btn btn-secondary" href="login.html">Cerrar Sesion</a>
                             </div>
                     </div>`;
 }
