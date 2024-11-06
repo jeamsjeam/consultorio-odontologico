@@ -1,0 +1,19 @@
+.image-container-navbar {
+    background-color: white;
+    max-width: 80px;
+    width: 100%;
+    overflow: hidden; 
+    border-radius: 5px;
+    padding: 3px;
+  }
+
+  .image-container-navbar img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
