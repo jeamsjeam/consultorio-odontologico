@@ -223,16 +223,16 @@ function CargarNavbar(pagina){
                         <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Inicio</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Quienes somos</a>
+                        <a class="nav-link ${pagina.indexOf('somos.html') !== -1 ? 'active' : ''}" href="somos.html">Quienes somos</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Servicios</a>
+                        <a class="nav-link ${pagina.indexOf('servicios.html') !== -1 ? 'active' : ''}" href="servicios.html">Servicios</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Consejos deltal</a>
+                        <a class="nav-link ${pagina.indexOf('consejos.html') !== -1 ? 'active' : ''}" href="consejos.html">Consejos deltal</a>
                     </li>
                     <li class="nav-item mx-1" style="background-color: #4d0aa7; border-radius: 10px !important;">
-                        <a class="nav-link text-white ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">RESERVACION DE CITAS</a>
+                        <a class="nav-link text-white ${pagina.indexOf('citas.html') !== -1 ? 'active' : ''}" href="citas.html">RESERVACION DE CITAS</a>
                     </li>
                 </ul>
                 <a type="button" class="btn btn-secondary" href="login.html">Cerrar Sesion</a>
