@@ -2,13 +2,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Se valida si la ruta no es index, registro o recuperacion
     if (window.location.href.indexOf('login.html') === -1 && 
-        window.location.href.indexOf('registro.html') === -1 &&
-        window.location.href.indexOf('recuperacion.html') === -1) {
+        window.location.href.indexOf('registro.html') === -1) {
 
         // Se carga el navbar y se crea el html de los modales
         CargarNavbar(window.location.href);
         CargarFooter()
-        CrearModales();
+        //CrearModales();
 
         // Se verifica si existe usuario en el sessionStorage
         //En caso de no existir se redigire al login 
@@ -189,7 +188,7 @@ async function ObtenerSelect(ruta, idSelect, error, datos) {
                 select.appendChild(option);
             });
         }else{
-            let data = await consultar(ruta, 'GET', {});
+            let data = await consultar(ruta, 'GET', null);
             if(data !== null && typeof data !== 'undefined'){
                 data.forEach(s => {
                     // Creamos una opción para cada select
