@@ -1,0 +1,18 @@
+.iconos{
+    min-width: 50px;
+    height: auto;
+}
+
+.image-container {
+    background-color: white;
+    max-width:200px;
+    width:100%;
+    overflow: hidden; 
+    border-radius:10px;
+    padding:10px;
+  }
+
+  .image-container img {
+    max-width:100%;
+    height:auto;
+  }
