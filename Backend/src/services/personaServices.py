@@ -8,6 +8,9 @@ class PersonaServices:
     def ObtenerPersonaPorCedula(cedula):
         return PersonaCalls.ObtenerPersonaPorCedula(cedula)
     
+    def ObtenerPersonaPorUsuario(usuarioId):
+        return PersonaCalls.ObtenerPersonaPorUsuario(usuarioId)
+    
     def CrearPersona(datos):
         try:
             # Se verifica si existe un registro con la misma cedula

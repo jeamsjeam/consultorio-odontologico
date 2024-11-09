@@ -19,6 +19,12 @@ def ObtenerPersonaPorCedula(cedula):
     respuesta = PersonaServices.ObtenerPersonaPorCedula(cedula)
     return CustomJsonify(respuesta, persona_schema, personas_schema)
 
+@app.route('/persona/ObtenerPorUsuario/<int:usuarioId>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ObtenerPersonaPorUsuario(usuarioId):
+    respuesta = PersonaServices.ObtenerPersonaPorUsuario(usuarioId)
+    return CustomJsonify(respuesta, persona_schema, personas_schema)
+
 @app.route('/persona/CrearPersona', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def CrearPersona():

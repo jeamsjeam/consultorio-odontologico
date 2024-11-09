@@ -12,6 +12,9 @@ class PersonaCalls():
 
     def ObtenerPersonaPorCedula(cedula):
         return Persona.query.filter(Persona.cedula == cedula).first()
+    
+    def ObtenerPersonaPorUsuario(usuarioId):
+        return Persona.query.filter(Persona.usuarioId == usuarioId).first()
         
     def CrearPersona(datos):
         try:
