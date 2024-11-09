@@ -15,12 +15,14 @@ async function cargarServicios(){
 
         for(const data of datos){
             contenido += `<div class="col">
-                            <div class="card border-success mb-2" style="max-width: 18rem;">
-                                <div class="card-header bg-transparent border-success text-danger">${data.nombre}</div>
-                                    <div class="card-body">
-                                        <p class="card-text">${data.descripcion}</p>
-                                    </div>
-                                <div class="card-footer bg-transparent border-success text-success">COP ${data.costo}</div>
+ 
+                            <div class="card">
+                            <img src="imagenes/${data.imagen}.jpg" class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger">${data.nombre}</h5>
+                                    <p class="card-text">${data.descripcion}</p>
+                                    <p class="card-text text-succes">${data.costo}</p>
+                                </div>
                             </div>
                         </div>`
         }
