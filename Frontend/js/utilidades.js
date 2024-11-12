@@ -5,13 +5,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href.indexOf('registro.html') === -1) {
 
         // Se carga el navbar y se crea el html de los modales
-        CargarNavbar(window.location.href);
-        CargarFooter()
+        if(window.location.href.indexOf('tablacitas.html') === -1){
+            CargarNavbar(window.location.href);
+            CargarFooter()
+        }
         //CrearModales();
 
         // Se verifica si existe usuario en el sessionStorage
         //En caso de no existir se redigire al login 
-        let datosUsuario = sessionStorage.getItem('usuario');
+        let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
         if (typeof datosUsuario === 'undefined' || datosUsuario === null) {
             window.location.href = "login.html";
         }
@@ -28,6 +30,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         
         // Se eliminan los siguientes objetos del localStorage
         localStorage.removeItem('usuarioLogeado');
+
+        if(window.location.href.indexOf('tablacitas.html') === -1 && datosUsuario.rol.id === 1){
+            window.location.href = "tablacitas.html";
+        }
+
+        if(window.location.href.indexOf('tablacitas.html') !== -1 && datosUsuario.rol.id !== 1){
+            window.location.href = "login.html";
+        }
 
     } else {
         // Se elimina el objeto usuario en caso de estar en el login
@@ -194,7 +204,7 @@ async function ObtenerSelect(ruta, idSelect, error, datos) {
                     // Creamos una opción para cada select
                     let option = document.createElement("option");
                     option.value = s.id;
-                    option.textContent = s.nombre;
+                    option.textContent = s.nombre + (s.costo ? (' - ' + s.costo + ' COP') : '');
                     select.appendChild(option);
                 });
             }else{

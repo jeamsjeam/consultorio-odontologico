@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     await CrearModalePersona()
     await buscarPersona()
+    await ObtenerSelect('servicio','servicios-select','Error al cargar los servicios')
 });
 
 // Variables globales
