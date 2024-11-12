@@ -13,6 +13,9 @@ class CitaCalls():
     def ObtenerCitasPorFechaId(fechaId):
         return Cita.query.filter(Cita.fechaId == fechaId).all()
     
+    def ObtenerCitasPorPersonaId(personaId):
+        return Cita.query.filter(Cita.personaId == personaId).all()
+    
     def ObtenerCitasPorPersonaYFecha(personaId, fechaId):
         return Cita.query.filter(and_(Cita.personaId == personaId, Cita.fechaId == fechaId)).first()
     

@@ -25,6 +25,20 @@ class CitasServices:
             print(f"Error al obtener cita: {e}")
             raise Exception(f"Error al obtener cita: {e}")
         
+    def ObtenerPorCedula(cedula):
+        try:
+            
+            existePerosna = PersonaCalls.ObtenerPersonaPorCedula(cedula)
+
+            if existePerosna is None:
+                raise Exception(f"No se encontro la cedula")
+            
+            return CitaCalls.ObtenerCitasPorPersonaId(existePerosna.id)
+            
+        except Exception as e:
+            print(f"Error al obtener cita: {e}")
+            raise Exception(f"Error al obtener cita: {e}")
+        
     def CrearCita(datos):
         try:
 
