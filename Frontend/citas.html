@@ -16,25 +16,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-4 p-5">
-                    <form action="#" method="POST" onsubmit="event.preventDefault(); crearCita()">
-                        <div class="mb-3">
-                            <label class="mb-2 text-muted" for="fecha">Fecha de la cita</label>
-                            <input id="fecha" type="date" class="form-control" name="fecha" value="" required>
+                    <div class="card shadow-lg mt-2">
+                        <div class="card-header text-center" style="background-color: #ad96e8; color: white;">
+                            <h4 class="fw-bold mb-0">Pedir cita</h4>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="mb-2 text-muted" for="servicio">Servicios</label>
-                            <select name="servicio" class="form-select" aria-label="Default select example" id="servicios-select">
-                                <!-- Agrega opciones del select si es necesario -->
-                            </select>
+                        <div class="card-body">
+                            <form action="#" method="POST" onsubmit="event.preventDefault(); crearCita()">
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="fecha">Fecha de la cita</label>
+                                    <input id="fecha" type="date" class="form-control" name="fecha" required>
+                                </div>
+        
+                                <div class="mb-4">
+                                    <label class="mb-2 text-muted" for="servicio">Servicios</label>
+                                    <select name="servicio" class="form-select" aria-label="Default select example" id="servicios-select">
+                                        <!-- Agrega opciones del select si es necesario -->
+                                    </select>
+                                </div>
+        
+                                <div class="d-flex align-items-center">
+                                    <button type="submit" class="btn btn-primary ms-auto">
+                                        Solicitar
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="d-flex align-items-center">
-                            <button type="submit" class="btn btn-primary ms-auto" onclick="">
-                                Solicitar
-                            </button>
+                        <div class="card-footer text-center" style="background-color: #e7d5ed;">
+                            <small class="text-muted">Seleccione la fecha y el servicio.</small>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="col-8 p-5">
             

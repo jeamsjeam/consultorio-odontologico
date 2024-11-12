@@ -111,9 +111,12 @@ function controlarModalPersona(bandera){
 }
 
 async function buscarPersona(){
-    let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
+    const datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
 
-    let datos = await consultar('persona/ObtenerPorUsuario/' + datosUsuario.id, 'GET', null); 
+    const datos = await consultar('persona/ObtenerPorUsuario/' + datosUsuario.id, 'GET', null); 
+
+    localStorage.removeItem('persona');
+    localStorage.setItem('persona', JSON.stringify(datos))
 
     if(typeof datos === 'undefined' || datos === null){
         controlarModalPersona(true)
@@ -160,6 +163,8 @@ async function registrarPersona(){
         municipio.value = 1
     
         controlarModalPersona(false)
+
+        mostrarNotificacion("Persona registrada ","linear-gradient(to right, #00b09b, #96c93d)"); 
     
         return
     }catch(e){
@@ -168,3 +173,35 @@ async function registrarPersona(){
 	}
 }
 
+async function crearCita(){
+    try {
+
+        let datosPersona = JSON.parse(localStorage.getItem('persona'));
+    
+        let fecha = document.getElementById('fecha')
+        let servicioId = document.querySelector('select[name="servicio"]')
+
+        const objeto = {
+            cedula: datosPersona.cedula,
+            fecha: fecha.value,
+            servicioId: parseInt(servicioId.selectedOptions[0].value)
+        }
+
+        const datos = await consultar('cita/CrearCita', 'POST', objeto); 
+
+        if(typeof datos === 'undefined' || datos === null){
+            mostrarNotificacion("No se pudo crear cita","#FF0000") 
+            return
+        }
+
+        fecha.value = ""
+        servicioId.value = 1
+
+        mostrarNotificacion("Cita creada ","linear-gradient(to right, #00b09b, #96c93d)"); 
+    
+        return
+    }catch(e){
+		mostrarNotificacion("Error: " + e,"#FF0000")  
+		console.error('Error:', e);
+	}
+}

@@ -1,6 +1,7 @@
 INSERT INTO rol (nombre) VALUES ('Administrador'), ('Cliente');
 INSERT INTO usuario (usuario, clave, estado, rolId) VALUES ('admin', '1234', true, 1);
 INSERT INTO tipo_persona (nombre) VALUES ('Empleado'), ('Cliente');
+INSERT INTO estado_cita (nombre) VALUES ('Creada'), ('Asistio'), ('No asistio'), ('Borrada');
 INSERT INTO pais (nombre) VALUES ('Venezuela');
 INSERT INTO estado (nombre, paisId) VALUES ('Táchira', 1);
 INSERT INTO municipio (nombre, estadoId) VALUES ('Junin', 1), ('San Cristóbal', 1);

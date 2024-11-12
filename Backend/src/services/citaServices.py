@@ -5,6 +5,7 @@ from ..calls.servicioCalls import ServicioCalls
 from ..calls.servicioCalls import ServicioCalls
 from ..models.fecha import Fecha
 from ..models.cita import Cita
+from datetime import datetime
 
 class CitasServices:
     def ObtenerCitas():
@@ -26,7 +27,13 @@ class CitasServices:
         
     def CrearCita(datos):
         try:
-            #se obtiene persona por cedula 
+
+            # se verifica que la fecha enviada no sea menor a la actual
+            if datetime.strptime(datos.fecha, "%Y-%m-%d") < datetime.now():
+                # mostrar mensaje de error por fecha menor a la actual
+                raise Exception(f"Fecha ingresada menor a la fecha actual")
+            
+            # se obtiene persona por cedula 
             persona = PersonaCalls.ObtenerPersonaPorCedula(datos.cedula)
             # si persona es none 
             if persona is None:
