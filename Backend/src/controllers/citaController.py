@@ -25,6 +25,12 @@ def ObtenerPorCedula(cedula):
     respuesta = CitasServices.ObtenerPorCedula(cedula)
     return CustomJsonify(respuesta, cita_schema, citas_schema)
 
+@app.route('/cita/ObtenerCitasPorRangoFechas', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ObtenerCitasPorRangoFechas():
+    respuesta = CitasServices.ObtenerCitasPorRangoFechas(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
+    return CustomJsonify(respuesta, cita_schema, citas_schema)
+
 @app.route('/cita/CrearCita', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def CrearCita():

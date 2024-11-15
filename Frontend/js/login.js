@@ -44,7 +44,7 @@ async function verificarUsuario() {
 		usuario.value = ''
 		clave.value = ''
 
-		let datos = await consultar('usuario/AutenticarUsuario', 'POST', objeto); 
+		const datos = await consultar('usuario/AutenticarUsuario', 'POST', objeto); 
 
 		if(typeof datos === 'undefined' || datos === null){
 			mostrarNotificacion("No se encontro ningun usuario","#FF0000") 
@@ -60,7 +60,11 @@ async function verificarUsuario() {
 
 		sessionStorage.setItem('usuario', JSON.stringify(usuarioLogeado))
 		localStorage.setItem('usuarioLogeado', JSON.stringify(usuarioLogeado))
-		window.location.href = "index.html";
+		if(datos.rol.id === 1){
+			window.location.href = "tablacitas.html";
+		}else{
+			window.location.href = "index.html";
+		}
 			
 		
 	}catch(e){

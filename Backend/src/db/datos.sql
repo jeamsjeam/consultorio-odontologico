@@ -6,13 +6,12 @@ INSERT INTO pais (nombre) VALUES ('Venezuela');
 INSERT INTO estado (nombre, paisId) VALUES ('Táchira', 1);
 INSERT INTO municipio (nombre, estadoId) VALUES ('Junin', 1), ('San Cristóbal', 1);
 INSERT INTO servicio (nombre, costo, descripcion, estado, imagen) VALUES
-('Limpieza dental profesional', 120000.00, 'Eliminación de placa y sarro en dientes', 1, "imagen1"),
-('Blanqueamiento dental', 450000.00, 'Tratamiento para aclarar el tono de los dientes', 1, "imagen1"),
-('Extracción de muela', 180000.00, 'Extracción de muela de forma simple', 1, "imagen1"),
-('Ortodoncia', 150000.00, 'Pago mensual para tratamiento de ortodoncia', 1, "imagen1"),
-('Implante dental', 3000000.00, 'Implante dental individual con corona', 1, "imagen1"),
-('Carilla de porcelana', 1000000.00, 'Carilla estética para dientes frontales', 1, "imagen1"),
-('Tratamiento de conducto', 350000.00, 'Endodoncia para salvar dientes con infección', 1, "imagen1"),
-('Resina dental', 100000.00, 'Empaste estético para cavidades', 1, "imagen1"),
-('Diseño de sonrisa', 2500000.00, 'Tratamiento estético completo para sonrisa', 1, "imagen1"),
-('Prótesis dental', 2000000.00, 'Prótesis parcial o completa según necesidad', 1, "imagen1");
+('Restauracion de resina', 120000.00, 'Reconstrucción con resina compuesta. UD 11.', 1, "imagen1"),
+('Extracciones Dentales ', 450000.00, 'procedimiento quirúrgico destruido por una caries profunda', 1, "imagen2"),
+('Blanqueamiento Dental ', 180000.00, 'tratamiento estético que aclara el color de los dientes ', 1, "imagen3"),
+('Limpieza Dental ', 150000.00, 'Eliminación de placa bacteriana y sarro en dientes', 1, "imagen4"),
+('Tratamiento Conducto ', 3000000.00, 'procedimiento dental que se realiza para salvar un diente', 1, "imagen5"),
+('Protesis removibles ', 1000000.00, 'aparato bucal para reemplazar piezas dentales faltantes ', 1, "imagen6"),
+('Ortodoncia ', 350000.00, ' cementación de los brackets', 1, "imagen7"),
+('Radriografias periapicales', 100000.00, 'examen de rayos X de un diente o varios ', 1, "imagen8");
+

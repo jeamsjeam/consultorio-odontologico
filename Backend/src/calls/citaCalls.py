@@ -1,4 +1,5 @@
 from ..models.cita import Cita
+from ..models.fecha import Fecha
 from src import db
 from sqlalchemy import and_, or_, not_
 
@@ -21,6 +22,9 @@ class CitaCalls():
     
     def ObtenerCitaPorEstado(estado):
         return Cita.query.filter(Cita.estadoCitaId == estado).all()
+    
+    def ObtenerCitasPorRangoFechas(fechaInicio,fechaFin):
+        return db.session.query(Cita).join(Fecha).filter(Fecha.fecha.between(fechaInicio, fechaFin)).all()
     
     def CrearCita(datos):
         try:

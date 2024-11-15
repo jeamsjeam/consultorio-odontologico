@@ -5,7 +5,7 @@ from ..calls.servicioCalls import ServicioCalls
 from ..calls.servicioCalls import ServicioCalls
 from ..models.fecha import Fecha
 from ..models.cita import Cita
-from datetime import datetime
+from datetime import datetime, date
 
 class CitasServices:
     def ObtenerCitas():
@@ -27,7 +27,6 @@ class CitasServices:
         
     def ObtenerPorCedula(cedula):
         try:
-            
             existePerosna = PersonaCalls.ObtenerPersonaPorCedula(cedula)
 
             if existePerosna is None:
@@ -39,11 +38,21 @@ class CitasServices:
             print(f"Error al obtener cita: {e}")
             raise Exception(f"Error al obtener cita: {e}")
         
+    def ObtenerCitasPorRangoFechas(datos):
+        try:
+            if datos.fechaInicio is not None and datos.fechaFin is not None:
+                return CitaCalls.ObtenerCitasPorRangoFechas(datetime.strptime(datos.fechaInicio, "%Y-%m-%d").date(), datetime.strptime(datos.fechaFin, "%Y-%m-%d").date())
+            else:
+                raise Exception("No se envieron fechas validas")
+        except Exception as e:
+            print(f"Error al obtener cita: {e}")
+            raise Exception(f"Error al obtener cita: {e}")
+                
     def CrearCita(datos):
         try:
 
             # se verifica que la fecha enviada no sea menor a la actual
-            if datetime.strptime(datos.fecha, "%Y-%m-%d") < datetime.now():
+            if datetime.strptime(datos.fecha, "%Y-%m-%d").date() < datetime.now().date():
                 # mostrar mensaje de error por fecha menor a la actual
                 raise Exception(f"Fecha ingresada menor a la fecha actual")
             
@@ -93,7 +102,7 @@ class CitasServices:
                 existeCitaPersonaFecha = CitaCalls.ObtenerCitasPorPersonaYFecha(persona.id, fechaId)
 
                 #verificar que la persona ya tiene una cita 
-                if existeCitaPersonaFecha is not None:
+                if existeCitaPersonaFecha is not None and existeCitaPersonaFecha.estadoCitaId != 4:
                     raise Exception(f"Persona ya tiene una cita para esa fecha")
                 
             # Crear  una nueva cita 

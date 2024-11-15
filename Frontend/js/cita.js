@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await CrearModalePersona()
     await buscarPersona()
     await ObtenerSelect('servicio','servicios-select','Error al cargar los servicios')
-    await DatosTabla()
+
+    let datosPersona = JSON.parse(localStorage.getItem('persona'));
+    
 });
 
 // Variables globales
@@ -116,12 +118,15 @@ async function buscarPersona(){
 
     const datos = await consultar('persona/ObtenerPorUsuario/' + datosUsuario.id, 'GET', null); 
 
-    localStorage.removeItem('persona');
-    localStorage.setItem('persona', JSON.stringify(datos))
-
+    
     if(typeof datos === 'undefined' || datos === null){
         controlarModalPersona(true)
     }
+
+    localStorage.removeItem('persona');
+    localStorage.setItem('persona', JSON.stringify(datos))
+    await DatosTabla()
+
     return
 }
 
@@ -199,6 +204,7 @@ async function crearCita(){
         servicioId.value = 1
 
         mostrarNotificacion("Cita creada ","linear-gradient(to right, #00b09b, #96c93d)"); 
+        await DatosTabla()
     
         return
     }catch(e){
@@ -213,14 +219,11 @@ async function DatosTabla(){
         let datosPersona = JSON.parse(localStorage.getItem('persona'));
 
         let data = await consultar("cita/ObtenerPorCedula/" + datosPersona.cedula, 'GET', null);
-        if(typeof data === 'undefined' || data === null){
+        if(typeof data === 'undefined' || data === null || data.length === 0){
             mostrarNotificacion("No se encontro ningun " + error,"#FF0000") 
         }
-        console.log(data)
 
-        mostrarNotificacion("Citas de la persona","linear-gradient(to right, #00b09b, #96c93d)"); 
-    
-        initDataTable(data)
+        initDataTable(data.sort((a, b) => new Date(b.fecha.fecha) - new Date(a.fecha.fecha)))
         
 	}catch(e){
 		mostrarNotificacion("Error: " + e,"#FF0000")  
@@ -236,7 +239,7 @@ const dataTableOptions = {
     scrollY: 'auto',  // Ajusta la altura automáticamente
     scrollCollapse: true,  // Permite colapsar la tabla si hay menos registros
     columnDefs: [
-        { className: "centered", targets: [0, 1, 2, 3, 4] }
+        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6] }
     ],
     pageLength: numeroPorPagona,
     destroy: true,
@@ -278,6 +281,8 @@ function listaDatos(datos) {
                  <tr>
                     <td>${index + 1}</td>
                     <td>${dato.persona.cedula}</td>
+                    <td>${dato.persona.nombre}</td>
+                    <td>${dato.persona.apellido}</td>
                     <td>${dato.fecha.fecha}</td>
                     <td>${dato.servicio.nombre}</td>
                     <td>${dato.estado_cita.nombre}</td>

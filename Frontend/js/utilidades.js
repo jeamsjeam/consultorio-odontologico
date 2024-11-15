@@ -31,10 +31,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Se eliminan los siguientes objetos del localStorage
         localStorage.removeItem('usuarioLogeado');
 
-        if(window.location.href.indexOf('tablacitas.html') === -1 && datosUsuario.rol.id === 1){
-            window.location.href = "tablacitas.html";
-        }
-
         if(window.location.href.indexOf('tablacitas.html') !== -1 && datosUsuario.rol.id !== 1){
             window.location.href = "login.html";
         }
@@ -204,7 +200,7 @@ async function ObtenerSelect(ruta, idSelect, error, datos) {
                     // Creamos una opción para cada select
                     let option = document.createElement("option");
                     option.value = s.id;
-                    option.textContent = s.nombre + (s.costo ? (' - ' + s.costo + ' COP') : '');
+                    option.textContent = s.nombre;
                     select.appendChild(option);
                 });
             }else{
