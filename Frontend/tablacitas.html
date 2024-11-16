@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/tablacitas.css">
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="css/DataTable/cdnjs.cloudflare.com_ajax_libs_font-awesome_6.2.0_css_all.min.css">
     <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
-    <title>Inicio</title>
+    <title>Clinica Odontológica Sonrisa</title>
 </head>
 <body style="background-color: #eaeaea;">
     <div class="main"> 
@@ -25,11 +27,60 @@
         </nav>
     
         <div class="container">
-            INICIO
+            <div class="row mb-3">
+                <div class="col-12" >
+                    <form method="POST" onsubmit="event.preventDefault(); consultarCitas()">
+                        <div class="row">
+                            <div class="col-4 mb-3">                   
+                                <label class="mb-2 text-muted" for="fechaInicio">Fecha Inicio</label>
+                                <input id="fechaInicio" type="date" class="form-control" name="fechaInicio" required>                  
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label class="mb-2 text-muted" for="fechaFin">Fecha Fin</label>
+                                <input id="fechaFin" type="date" class="form-control" name="fechaFin" required>
+                            </div>
+                            <div class="col-4 mb-3 d-flex align-items-end">
+                                <div class="justify-content-start">
+                                    <button type="submit" class="btn btn-primary ms-auto">
+                                        Consultar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 my-5">
+                  <table id="datatable_citas" class="table table-striped">
+                    <caption>
+                        Citas
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">Cedula</th>
+                            <th class="centered">Nombre</th>
+                            <th class="centered">Apellido</th>
+                            <th class="centered">Fecha</th>
+                            <th class="centered">Serivicio</th>
+                            <th class="centered">Estado</th>
+                            <th class="centered">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_citas"></tbody>
+                  </table> 
+                </div>
+              </div>
+            
         </div>
     
     </div>
     
+    <script src="js/DataTable/cdnjs.cloudflare.com_ajax_libs_jquery_3.6.0_jquery.min.js"></script>
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_jquery.dataTables.min.js"></script>
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_dataTables.bootstrap5.min.js"></script>
+    <script src="js/tablacitas.js"></script>
     <script src="js/toastify.js"></script>
     <script src="js/utilidades.js"></script>
     <script src="bootstrap-5/js/bootstrap.min.js"></script>
