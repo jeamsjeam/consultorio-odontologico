@@ -36,3 +36,9 @@ def ObtenerCitasPorRangoFechas():
 def CrearCita():
     respuesta = CitasServices.CrearCita(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
     return CustomJsonify(respuesta, cita_schema, citas_schema)
+
+@app.route('/cita/ActualizarCita', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ActualizarCita():
+    respuesta = CitasServices.ActualizarCita(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
+    return CustomJsonify(respuesta, cita_schema, citas_schema)

@@ -9,6 +9,7 @@ class Persona(db.Model):
     nombre = db.Column(db.String(150), nullable=False)
     apellido = db.Column(db.String(150), nullable=False)
     telefono = db.Column(db.String(20))
+    fechaNacimiento = db.Column(db.Date, nullable=False) 
     direccion = db.Column(db.String(255))
     municipioId = db.Column(db.BigInteger(), db.ForeignKey('municipio.id'))
     tipoPersonaId = db.Column(db.BigInteger(), db.ForeignKey('tipo_persona.id'))
@@ -16,12 +17,13 @@ class Persona(db.Model):
     
     citas = relationship('Cita', backref='persona')
 
-    def __init__(self, nombre, apellido, cedula, telefono, direccion, municipioId, tipoPersonaId, usuarioId):
+    def __init__(self, nombre, apellido, cedula, telefono, direccion, fechaNacimiento, municipioId, tipoPersonaId, usuarioId):
         self.nombre = nombre
         self.apellido = apellido
         self.cedula = cedula
         self.telefono = telefono
         self.direccion = direccion
+        self.fechaNacimiento = fechaNacimiento
         self.municipioId = municipioId
         self.tipoPersonaId = tipoPersonaId
         self.usuarioId = usuarioId

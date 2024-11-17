@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     await CrearModalePersona()
     await buscarPersona()
     await ObtenerSelect('servicio','servicios-select','Error al cargar los servicios')
-
-    let datosPersona = JSON.parse(localStorage.getItem('persona'));
-    
 });
 
 // Variables globales
@@ -51,10 +48,16 @@ async function CrearModalePersona() {
                                     </div>
                                 </div> 
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="mb-3">
                                             <label class="mb-2 text-muted" for="direccion">Direccion</label>
                                             <input id="direccion" type="text" class="form-control" name="direccion" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="mb-2 text-muted" for="fechaNacimiento">Fecha Nacimiento</label>
+                                            <input id="fechaNacimiento" type="date" class="form-control" name="fechaNacimiento" value="" required>
                                         </div>
                                     </div>
                                 </div> 
@@ -121,6 +124,7 @@ async function buscarPersona(){
     
     if(typeof datos === 'undefined' || datos === null){
         controlarModalPersona(true)
+        return
     }
 
     localStorage.removeItem('persona');
@@ -139,6 +143,7 @@ async function registrarPersona(){
         let apellido = document.getElementById('apellido')
         let telefono = document.getElementById('telefono')
         let direccion = document.getElementById('direccion')
+        let fechaNacimiento = document.getElementById('fechaNacimiento')
         let municipio = document.querySelector('select[name="municipio"]')
     
         const objeto = {
@@ -147,6 +152,7 @@ async function registrarPersona(){
             apellido: apellido.value,
             telefono: telefono.value,
             direccion: direccion.value,
+            fechaNacimiento: fechaNacimiento.value,
             municipioId: parseInt(municipio.selectedOptions[0].value),
             tipoPersonaId: 2,
             usuarioId: datosUsuario.id
@@ -166,6 +172,7 @@ async function registrarPersona(){
         apellido.value = ""
         telefono.value = ""
         direccion.value = ""
+        fechaNacimiento.value = ""
         municipio.value = 1
     
         controlarModalPersona(false)
@@ -239,7 +246,7 @@ const dataTableOptions = {
     scrollY: 'auto',  // Ajusta la altura automáticamente
     scrollCollapse: true,  // Permite colapsar la tabla si hay menos registros
     columnDefs: [
-        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6] }
+        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7, 8] }
     ],
     pageLength: numeroPorPagona,
     destroy: true,
@@ -283,6 +290,8 @@ function listaDatos(datos) {
                     <td>${dato.persona.cedula}</td>
                     <td>${dato.persona.nombre}</td>
                     <td>${dato.persona.apellido}</td>
+                    <td>${dato.persona.fechaNacimiento}</td>
+                    <td>${dato.persona.telefono}</td>
                     <td>${dato.fecha.fecha}</td>
                     <td>${dato.servicio.nombre}</td>
                     <td>${dato.estado_cita.nombre}</td>

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href.indexOf('registro.html') === -1) {
 
         // Se carga el navbar y se crea el html de los modales
-        if(window.location.href.indexOf('tablacitas.html') === -1){
+        if(window.location.href.indexOf('tablacitas.html') === -1 && window.location.href.indexOf('pacientes.html') === -1){
             CargarNavbar(window.location.href);
             CargarFooter()
         }
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Se eliminan los siguientes objetos del localStorage
         localStorage.removeItem('usuarioLogeado');
 
-        if(window.location.href.indexOf('tablacitas.html') !== -1 && datosUsuario.rol.id !== 1){
+        if((window.location.href.indexOf('tablacitas.html') !== -1 || window.location.href.indexOf('pacientes.html')) !== -1 && datosUsuario.rol.id !== 1){
             window.location.href = "login.html";
         }
 
