@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         //Se verifica si no ex el index
-        if (window.location.href.indexOf('index.html') !== -1) {
+        if (window.location.href.indexOf('somos.html') !== -1) {
 
             // Se verifica si existe usarioLogeado, para poder mostrar una notificacion en verde
             let usuarioLogeado = JSON.parse(localStorage.getItem('usuarioLogeado'));
@@ -217,7 +217,7 @@ async function ObtenerSelect(ruta, idSelect, error, datos) {
 // pagina: es la pagina actual, sirve para colocar como activo en el navbar
 function CargarNavbar(pagina){
     document.getElementById("navbar").innerHTML = `
-            <a class="navbar-brand p-1 text-white" href="index.html" style="background-color: #ba87ca; border-radius: 5px !important;">
+            <a class="navbar-brand p-1 text-white" href="somos.html" style="background-color: #ba87ca; border-radius: 5px !important;">
                 <div class="image-container-navbar">
                     <img src="imagenes/IMG-20240810-WA0005.png" alt="logo">
                 </div>
@@ -225,10 +225,10 @@ function CargarNavbar(pagina){
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('index.html') !== -1 ? 'active' : ''}" href="index.html">Inicio</a>
+                        <a class="nav-link ${pagina.indexOf('somos.html') !== -1 ? 'active' : ''}" href="somos.html">Quienes somos</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('somos.html') !== -1 ? 'active' : ''}" href="somos.html">Quienes somos</a>
+                        <a class="nav-link ${pagina.indexOf('galeria.html') !== -1 ? 'active' : ''}" href="galeria.html">Galeria</a>
                     </li>
                     <li class="nav-item mx-1">
                         <a class="nav-link ${pagina.indexOf('servicios.html') !== -1 ? 'active' : ''}" href="servicios.html">Servicios</a>

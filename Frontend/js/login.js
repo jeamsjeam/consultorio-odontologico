@@ -63,7 +63,7 @@ async function verificarUsuario() {
 		if(datos.rol.id === 1){
 			window.location.href = "tablacitas.html";
 		}else{
-			window.location.href = "index.html";
+			window.location.href = "somos.html";
 		}
 			
 		

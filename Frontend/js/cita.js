@@ -356,6 +356,9 @@ async function populateMonthAndYear() {
     await renderCalendar();
 }
 
+var mes = 1
+var anio = 2024
+
 // Función para renderizar el calendario según el mes y año seleccionados
 async function renderCalendar() {
     // Obtiene el mes y año seleccionados
@@ -374,8 +377,11 @@ async function renderCalendar() {
 
     // Definición de los nombres de los días de la semana
     const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-    
-    const datos = await diasSinCitas(1, daysInMonth, new Date(year, month + 2, 0).getMonth(), year)
+
+    anio = year
+    mes = new Date(year, month + 2, 0).getMonth()
+
+    const datos = await diasSinCitas(1, daysInMonth, mes === 0 ? 12 : mes, anio)
 
     // Agrega encabezados de los días de la semana al calendario
     daysOfWeek.forEach(day => {
@@ -429,8 +435,15 @@ function changeColor(dayCell) {
 
     if(dayCell.className === 'blue'){
         dayCell.className = 'white'
+       
+        document.getElementById('fecha').value = ''
     }else{
         dayCell.className = 'blue'
+        day = dayCell.innerHTML
+        if(dayCell.innerHTML < 10){
+            day = '0'+ dayCell.innerHTML
+        }
+        document.getElementById('fecha').value = anio +'-' + (mes === 0 ? 12 : mes) + '-' + day
     }
 
     dayCellAnterior = dayCell    
