@@ -313,3 +313,85 @@ function listaDatos(datos) {
 		console.error('Error:', e);
     }
 }
+
+const monthSelect = document.getElementById("month");
+const yearSelect = document.getElementById("year");
+const calendar = document.getElementById("calendar");
+
+const colors = ["white", "green", "gray"];
+
+function populateMonthAndYear() {
+    for (let m = 0; m < 12; m++) {
+        const option = document.createElement("option");
+        option.value = m;
+        option.text = new Date(0, m).toLocaleString("es", { month: "long" });
+        monthSelect.appendChild(option);
+    }
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+        const option = document.createElement("option");
+        option.value = y;
+        option.text = y;
+        yearSelect.appendChild(option);
+    }
+    monthSelect.value = new Date().getMonth();
+    yearSelect.value = currentYear;
+}
+
+function renderCalendar() {
+    const month = parseInt(monthSelect.value);
+    const year = parseInt(yearSelect.value);
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    // Días del mes anterior que se mostrarán
+    const previousMonthDays = new Date(year, month, 0).getDate();
+    calendar.innerHTML = "";
+    const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+    
+    // Encabezados de los días de la semana
+    daysOfWeek.forEach(day => {
+        const dayElement = document.createElement("div");
+        dayElement.textContent = day;
+        dayElement.classList.add("header");
+        calendar.appendChild(dayElement);
+    });
+    
+    // Días del mes anterior (inactivos)
+    for (let i = firstDay - 1; i >= 0; i--) {
+        const inactiveCell = document.createElement("div");
+        inactiveCell.textContent = previousMonthDays - i;
+        inactiveCell.classList.add("inactive");
+        calendar.appendChild(inactiveCell);
+    }
+    
+    // Días del mes actual
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = document.createElement("div");
+        dayCell.textContent = day;
+        dayCell.classList.add("white");
+        dayCell.onclick = () => changeColor(dayCell);
+        calendar.appendChild(dayCell);
+    }
+    
+    // Días del mes siguiente (inactivos)
+    const totalCells = firstDay + daysInMonth;
+    const remainingCells = 7 - (totalCells % 7);
+    if (remainingCells < 7) {
+        for (let j = 1; j <= remainingCells; j++) {
+            const inactiveCell = document.createElement("div");
+            inactiveCell.textContent = j;
+            inactiveCell.classList.add("inactive");
+            calendar.appendChild(inactiveCell);
+        }
+    }
+}
+
+function changeColor(dayCell) {
+    const currentColor = dayCell.classList[0];
+    const nextColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
+    dayCell.className = nextColor;
+}
+
+populateMonthAndYear();
+renderCalendar();

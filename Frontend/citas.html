@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/citas.css">
     <link rel="stylesheet" type="text/css" href="css/utilidades.css">
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
     <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
@@ -17,7 +18,7 @@
         
         <div class="container">
             <div class="row">
-                <div class="col-4 p-5">
+                <div class="col-4 p-5 mt-5">
                     <div class="card shadow-lg mt-2">
                         <div class="card-header text-center" style="background-color: #ad96e8; color: white;">
                             <h4 class="fw-bold mb-0">Pedir cita</h4>
@@ -48,8 +49,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-8 p-5">
-            
+                <div class="col-8 px-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-2">
+                            <select id="month" class="form-select form-control"></select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <select id="year" class="form-select form-control"></select>
+                        </div>
+                        <div class="col-md-2 mb-2 d-flex align-items-end">
+                            <button onclick="renderCalendar()" class="btn btn-primary">Mostrar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar border rounded p-3" id="calendar"></div>
                 </div>
             </div>
             <div class="row">
