@@ -9,6 +9,9 @@ class FechaCalls():
     def ObtenerFechaPorFecha(fecha):
         return Fecha.query.filter(Fecha.fecha == fecha).first()
     
+    def ObtenerFechasPorRango(fechaInicio,fechaFin):
+        return Fecha.query.filter(Fecha.fecha.between(fechaInicio, fechaFin)).all()
+    
     def CrearFecha(datos):
         try:
             db.session.add(datos)

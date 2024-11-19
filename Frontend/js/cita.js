@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await CrearModalePersona()
     await buscarPersona()
     await ObtenerSelect('servicio','servicios-select','Error al cargar los servicios')
+
+    await populateMonthAndYear();
+    
 });
 
 // Variables globales
@@ -117,21 +120,26 @@ function controlarModalPersona(bandera){
 }
 
 async function buscarPersona(){
-    const datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
+    try {
+        const datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
 
-    const datos = await consultar('persona/ObtenerPorUsuario/' + datosUsuario.id, 'GET', null); 
+        const datos = await consultar('persona/ObtenerPorUsuario/' + datosUsuario.id, 'GET', null); 
 
-    
-    if(typeof datos === 'undefined' || datos === null){
-        controlarModalPersona(true)
+        
+        if(typeof datos === 'undefined' || datos === null){
+            controlarModalPersona(true)
+            return
+        }
+
+        localStorage.removeItem('persona');
+        localStorage.setItem('persona', JSON.stringify(datos))
+        await DatosTabla()
+
         return
-    }
-
-    localStorage.removeItem('persona');
-    localStorage.setItem('persona', JSON.stringify(datos))
-    await DatosTabla()
-
-    return
+    }catch(e){
+		mostrarNotificacion("Error: " + e,"#FF0000")  
+		console.error('Error:', e);
+	}
 }
 
 async function registrarPersona(){
@@ -314,42 +322,62 @@ function listaDatos(datos) {
     }
 }
 
+// Selecciona los elementos HTML para los selectores de mes, año y el contenedor del calendario
 const monthSelect = document.getElementById("month");
 const yearSelect = document.getElementById("year");
 const calendar = document.getElementById("calendar");
 
-const colors = ["white", "green", "gray"];
+// Define los colores que se usarán para cada día del calendario
+const colors = ["white", "green",];
 
-function populateMonthAndYear() {
+// Función para poblar los selectores de mes y año en el HTML
+async function populateMonthAndYear() {
+    // Llena el selector de mes con los nombres de los meses
     for (let m = 0; m < 12; m++) {
         const option = document.createElement("option");
         option.value = m;
-        option.text = new Date(0, m).toLocaleString("es", { month: "long" });
+        option.text = new Date(0, m).toLocaleString("es", { month: "long" }); // Nombre del mes en español
         monthSelect.appendChild(option);
     }
+
+    // Define el año actual y crea una lista de años desde el actual - 5 hasta el actual + 5
     const currentYear = new Date().getFullYear();
-    for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+    for (let y = currentYear; y <= currentYear + 2; y++) {
         const option = document.createElement("option");
         option.value = y;
         option.text = y;
         yearSelect.appendChild(option);
     }
+
+    // Selecciona el mes y año actuales por defecto en los selectores
     monthSelect.value = new Date().getMonth();
     yearSelect.value = currentYear;
+
+    await renderCalendar();
 }
 
-function renderCalendar() {
+// Función para renderizar el calendario según el mes y año seleccionados
+async function renderCalendar() {
+    // Obtiene el mes y año seleccionados
     const month = parseInt(monthSelect.value);
     const year = parseInt(yearSelect.value);
+
+    // Calcula el primer día de la semana y el total de días del mes seleccionado
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-    // Días del mes anterior que se mostrarán
+
+    // Calcula el total de días del mes anterior
     const previousMonthDays = new Date(year, month, 0).getDate();
+
+    // Limpia el contenido actual del calendario
     calendar.innerHTML = "";
+
+    // Definición de los nombres de los días de la semana
     const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
     
-    // Encabezados de los días de la semana
+    const datos = await diasSinCitas(1, daysInMonth, new Date(year, month + 2, 0).getMonth(), year)
+
+    // Agrega encabezados de los días de la semana al calendario
     daysOfWeek.forEach(day => {
         const dayElement = document.createElement("div");
         dayElement.textContent = day;
@@ -357,7 +385,7 @@ function renderCalendar() {
         calendar.appendChild(dayElement);
     });
     
-    // Días del mes anterior (inactivos)
+    // Agrega celdas inactivas al calendario para los días del mes anterior
     for (let i = firstDay - 1; i >= 0; i--) {
         const inactiveCell = document.createElement("div");
         inactiveCell.textContent = previousMonthDays - i;
@@ -365,16 +393,20 @@ function renderCalendar() {
         calendar.appendChild(inactiveCell);
     }
     
-    // Días del mes actual
+    // Agrega los días del mes actual al calendario
     for (let day = 1; day <= daysInMonth; day++) {
         const dayCell = document.createElement("div");
         dayCell.textContent = day;
-        dayCell.classList.add("white");
-        dayCell.onclick = () => changeColor(dayCell);
+        if(datos.findIndex(x => x === day) !== -1){
+            dayCell.classList.add("gray");
+        }else{
+            dayCell.classList.add("white"); // Establece el color inicial en blanco
+            dayCell.onclick = () => changeColor(dayCell); // Llama a la función changeColor cuando se hace clic en el día
+        }
         calendar.appendChild(dayCell);
     }
     
-    // Días del mes siguiente (inactivos)
+    // Agrega celdas inactivas para llenar la última fila con días del mes siguiente
     const totalCells = firstDay + daysInMonth;
     const remainingCells = 7 - (totalCells % 7);
     if (remainingCells < 7) {
@@ -387,11 +419,40 @@ function renderCalendar() {
     }
 }
 
+var dayCellAnterior = null
+
+// Función para cambiar el color de un día del calendario
 function changeColor(dayCell) {
-    const currentColor = dayCell.classList[0];
-    const nextColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
-    dayCell.className = nextColor;
+    if(typeof dayCellAnterior !== 'undefined' && dayCellAnterior !== null && dayCell.className !== 'blue'){
+        dayCellAnterior.className = "white";
+    }
+
+    if(dayCell.className === 'blue'){
+        dayCell.className = 'white'
+    }else{
+        dayCell.className = 'blue'
+    }
+
+    dayCellAnterior = dayCell    
 }
 
-populateMonthAndYear();
-renderCalendar();
+async function diasSinCitas(firstDay, daysInMonth, month, year){
+    try {
+        const objeto = {
+            fechaInicio: year + '-' + month + '-' + firstDay,
+            fechaFin: year + '-' + month + '-' + daysInMonth
+        }
+      
+        const datos = await consultar('cita/CalendarioNoDisponible', 'POST', objeto); 
+      
+        if(typeof datos === 'undefined' || datos === null){
+            controlarModalPersona(true)
+            return
+        }
+
+        return datos
+    }catch(e){
+		mostrarNotificacion("Error: " + e,"#FF0000")  
+		console.error('Error:', e);
+	}
+}

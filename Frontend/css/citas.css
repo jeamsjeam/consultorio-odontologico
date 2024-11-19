@@ -17,12 +17,12 @@
     cursor: pointer;
 }
 
-.calendar div:hover {
+/* .calendar div:hover {
     transform: scale(1.05);
-}
+} */
 
 .header {
-    background-color: #007bff;
+    background-color: #ad96e8; 
     color: white;
     font-weight: bold;
     border: none;
@@ -34,6 +34,11 @@
 
 .green { 
     background-color: #28a745; 
+    color: white;
+}
+
+.blue { 
+    background-color: #275ae6; 
     color: white;
 }
 

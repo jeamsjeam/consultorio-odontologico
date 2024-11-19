@@ -48,6 +48,28 @@ class CitasServices:
             print(f"Error al obtener cita: {e}")
             raise Exception(f"Error al obtener cita: {e}")
                 
+    def CalendarioNoDisponible(datos):
+        try:
+            resultado = []
+  
+            fechas = FechaCalls.ObtenerFechasPorRango(datetime.strptime(datos.fechaInicio, "%Y-%m-%d").date(), datetime.strptime(datos.fechaFin, "%Y-%m-%d").date())
+
+            if fechas is None or len(fechas) == 0:
+                return resultado
+
+            for fecha in fechas:
+
+                citas = CitaCalls.ObtenerCitasPorFechaIdActivas(fecha.id)
+
+                if len(citas) >= fecha.cantidad:
+                    resultado.append(fecha.fecha.day)
+
+            return resultado
+
+        except Exception as e:
+            print(f"Error al obtener cita: {e}")
+            raise Exception(f"Error al obtener cita: {e}")
+
     def CrearCita(datos):
         try:
 
@@ -87,7 +109,7 @@ class CitasServices:
             #sino la fecha no es none 
             else:
                 # Obtener las citas asociadas a la fecha con el identificador 'id' del objeto 'existeFecha'
-                citasFecha = CitaCalls.ObtenerCitasPorFechaId(existeFecha.id)
+                citasFecha = CitaCalls.ObtenerCitasPorFechaIdActivas(existeFecha.id)
 
                 # verifica la cantidad de las cita programada es mayor o igual al limite permitido por citas 
                 # if len (citasFecha) se obtiene la cantidad de citas programadas 
@@ -141,6 +163,7 @@ class CitasServices:
         except Exception as e:
             print(f"Error al actualizar cita: {e}")
             raise Exception(f"Error al actualizar cita: {e}")
+        
 
 
 
