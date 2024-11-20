@@ -17,8 +17,14 @@ class CitaCalls():
     def ObtenerCitasPorFechaIdActivas(fechaId):
         return Cita.query.filter(and_(Cita.fechaId == fechaId, Cita.estadoCitaId == 1)).all()
     
+    def ObtenerCitaPorFechaIdPorCedula(fechaId, personaId):
+        return Cita.query.filter(and_(Cita.fechaId == fechaId, Cita.personaId == personaId, Cita.estadoCitaId != 4)).first()
+    
     def ObtenerCitasPorPersonaId(personaId):
         return Cita.query.filter(Cita.personaId == personaId).all()
+    
+    def ObtenerCitasPorPersonaIdMenosBorradas(personaId):
+        return Cita.query.filter(and_(Cita.personaId == personaId, Cita.estadoCitaId != 4)).all()
     
     def ObtenerCitasPorPersonaYFecha(personaId, fechaId):
         return Cita.query.filter(and_(Cita.personaId == personaId, Cita.fechaId == fechaId, Cita.estadoCitaId == 1)).first()

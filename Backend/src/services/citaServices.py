@@ -38,6 +38,19 @@ class CitasServices:
             print(f"Error al obtener cita: {e}")
             raise Exception(f"Error al obtener cita: {e}")
         
+    def ObtenerPorCedulaMenosBorradas(cedula):
+        try:
+            existePerosna = PersonaCalls.ObtenerPersonaPorCedula(cedula)
+
+            if existePerosna is None:
+                raise Exception(f"No se encontro la cedula")
+            
+            return CitaCalls.ObtenerCitasPorPersonaIdMenosBorradas(existePerosna.id)
+            
+        except Exception as e:
+            print(f"Error al obtener cita: {e}")
+            raise Exception(f"Error al obtener cita: {e}")
+        
     def ObtenerCitasPorRangoFechas(datos):
         try:
             if datos.fechaInicio is not None and datos.fechaFin is not None:
@@ -66,6 +79,30 @@ class CitasServices:
 
             return resultado
 
+        except Exception as e:
+            print(f"Error al obtener cita: {e}")
+            raise Exception(f"Error al obtener cita: {e}")
+        
+    def ObtenerCitasPersonaPorRangoFechas(datos):
+        try:
+            resultado = []
+
+            existePerosna = PersonaCalls.ObtenerPersonaPorCedula(datos.cedula)
+
+            if existePerosna is None:
+                raise Exception(f"No se encontro la cedula")
+            
+            fechas = FechaCalls.ObtenerFechasPorRango(datetime.strptime(datos.fechaInicio, "%Y-%m-%d").date(), datetime.strptime(datos.fechaFin, "%Y-%m-%d").date())
+
+            for fecha in fechas:
+
+                cita = CitaCalls.ObtenerCitaPorFechaIdPorCedula(fecha.id, existePerosna.id)
+
+                if cita is not None:
+                    resultado.append(fecha.fecha.day)
+
+            return resultado
+            
         except Exception as e:
             print(f"Error al obtener cita: {e}")
             raise Exception(f"Error al obtener cita: {e}")

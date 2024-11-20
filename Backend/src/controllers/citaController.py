@@ -25,10 +25,22 @@ def ObtenerPorCedula(cedula):
     respuesta = CitasServices.ObtenerPorCedula(cedula)
     return CustomJsonify(respuesta, cita_schema, citas_schema)
 
+@app.route('/cita/ObtenerPorCedulaMenosBorradas/<string:cedula>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ObtenerPorCedulaMenosBorradas(cedula):
+    respuesta = CitasServices.ObtenerPorCedulaMenosBorradas(cedula)
+    return CustomJsonify(respuesta, cita_schema, citas_schema)
+
 @app.route('/cita/CalendarioNoDisponible', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def CalendarioNoDisponible():
     respuesta = CitasServices.CalendarioNoDisponible(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
+    return respuesta
+
+@app.route('/cita/ObtenerCitasPersonaPorRangoFechas', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def ObtenerCitasPersonaPorRangoFechas():
+    respuesta = CitasServices.ObtenerCitasPersonaPorRangoFechas(json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d)))
     return respuesta
 
 @app.route('/cita/ObtenerCitasPorRangoFechas', methods=['POST'])
