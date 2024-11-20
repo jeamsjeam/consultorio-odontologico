@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
+
     await CrearModalePersona()
     await buscarPersona()
     await ObtenerSelect('servicio','servicios-select','Error al cargar los servicios')
@@ -219,6 +220,8 @@ async function crearCita(){
         servicioId.value = 1
 
         mostrarNotificacion("Cita creada ","linear-gradient(to right, #00b09b, #96c93d)"); 
+        document.getElementById('fecha').value = ''
+        await renderCalendar();
         await DatosTabla()
     
         return
@@ -233,7 +236,7 @@ async function DatosTabla(){
 
         let datosPersona = JSON.parse(localStorage.getItem('persona'));
 
-        let data = await consultar("cita/ObtenerPorCedula/" + datosPersona.cedula, 'GET', null);
+        let data = await consultar("cita/ObtenerPorCedulaMenosBorradas/" + datosPersona.cedula, 'GET', null);
         if(typeof data === 'undefined' || data === null || data.length === 0){
             mostrarNotificacion("No se encontro ningun " + error,"#FF0000") 
         }
@@ -304,15 +307,13 @@ function listaDatos(datos) {
                     <td>${dato.servicio.nombre}</td>
                     <td>${dato.estado_cita.nombre}</td>
                     <!-- <td><i class="fa-solid fa-check" style="color: green;"></i></td> -->
-                    <!-- <td>
-                        <button class="btn btn-sm btn-primary" onclick="ModalPersonas(${dato.id},true,'actualizar')"
-                        ><i class="bi bi-pen"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="ModalPersonas(${dato.id},true,'eliminar')"
-                        ><i class="bi bi-trash3"></i></button>
-                         <button class="btn btn-sm btn-info" onclick="generarConstancia(${dato.id})">
-                            <i class="bi bi-file-earmark-text"></i>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="cambiarEstado(${dato.id},4)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                            </svg>
                         </button>
-                    </td>-->
+                    </td>
                 </tr>`;
         });
         tableBody_citas.innerHTML = content;
@@ -322,13 +323,34 @@ function listaDatos(datos) {
     }
 }
 
+async function cambiarEstado(id, estado){
+    try {
+        const objeto = {
+            id: id,
+            estadoCitaId: estado
+        }
+
+        const datos = await consultar('cita/ActualizarCita', 'POST', objeto); 
+
+        if(typeof datos === 'undefined' || datos === null){
+            mostrarNotificacion("No se pudo cambiar el estado de la cita","#FF0000") 
+            return
+        }
+        mostrarNotificacion("Se cambio el estado de la cita","linear-gradient(to right, #00b09b, #96c93d)"); 
+
+        await renderCalendar();
+        await DatosTabla()
+
+    }catch(e){
+        mostrarNotificacion("Error: " + e,"#FF0000")  
+        console.error('Error:', e);
+    }
+}
+
 // Selecciona los elementos HTML para los selectores de mes, año y el contenedor del calendario
 const monthSelect = document.getElementById("month");
 const yearSelect = document.getElementById("year");
 const calendar = document.getElementById("calendar");
-
-// Define los colores que se usarán para cada día del calendario
-const colors = ["white", "green",];
 
 // Función para poblar los selectores de mes y año en el HTML
 async function populateMonthAndYear() {
@@ -361,6 +383,9 @@ var anio = 2024
 
 // Función para renderizar el calendario según el mes y año seleccionados
 async function renderCalendar() {
+
+    document.getElementById('fecha').value = ''
+
     // Obtiene el mes y año seleccionados
     const month = parseInt(monthSelect.value);
     const year = parseInt(yearSelect.value);
@@ -380,8 +405,16 @@ async function renderCalendar() {
 
     anio = year
     mes = new Date(year, month + 2, 0).getMonth()
+    const diaActual = new Date().getDate()
+    const mesActual = new Date().getMonth()
+    const anioActual = new Date().getFullYear()
 
-    const datos = await diasSinCitas(1, daysInMonth, mes === 0 ? 12 : mes, anio)
+    let datosDiasNoDisponibles = []
+    if((month >= mesActual && year === anioActual) || (year > anioActual)){
+        datosDiasNoDisponibles = await diasSinCitas(1, daysInMonth, (mes === 0 ? 12 : (mes < 10 ? '0' + mes : mes)), anio)
+    }
+
+    const datosCitasPersona = await citasPersona(1, daysInMonth, (mes === 0 ? 12 : (mes < 10 ? '0' + mes : mes)), anio)
 
     // Agrega encabezados de los días de la semana al calendario
     daysOfWeek.forEach(day => {
@@ -398,17 +431,32 @@ async function renderCalendar() {
         inactiveCell.classList.add("inactive");
         calendar.appendChild(inactiveCell);
     }
-    
+
     // Agrega los días del mes actual al calendario
     for (let day = 1; day <= daysInMonth; day++) {
+
         const dayCell = document.createElement("div");
+
         dayCell.textContent = day;
-        if(datos.findIndex(x => x === day) !== -1){
-            dayCell.classList.add("gray");
+
+        if(datosCitasPersona.findIndex(x => x === day) !== -1){
+            dayCell.classList = "blue";
         }else{
-            dayCell.classList.add("white"); // Establece el color inicial en blanco
-            dayCell.onclick = () => changeColor(dayCell); // Llama a la función changeColor cuando se hace clic en el día
+
+            if(month < mesActual && year <= anioActual){
+                dayCell.classList.add("inactive");
+            }else{
+                if(day < diaActual && month === mesActual && year === anioActual){
+                    dayCell.classList.add("inactive");
+                }else if(datosDiasNoDisponibles.findIndex(x => x === day) !== -1){
+                    dayCell.classList.add("gray");
+                }else{
+                    dayCell.classList.add("white"); // Establece el color inicial en blanco
+                    dayCell.onclick = () => changeColor(dayCell); // Llama a la función changeColor cuando se hace clic en el día
+                }
+            }
         }
+
         calendar.appendChild(dayCell);
     }
     
@@ -429,21 +477,21 @@ var dayCellAnterior = null
 
 // Función para cambiar el color de un día del calendario
 function changeColor(dayCell) {
-    if(typeof dayCellAnterior !== 'undefined' && dayCellAnterior !== null && dayCell.className !== 'blue'){
+    console.log(dayCell)
+    if(typeof dayCellAnterior !== 'undefined' && dayCellAnterior !== null && dayCell.className !== 'green'){
         dayCellAnterior.className = "white";
     }
 
-    if(dayCell.className === 'blue'){
+    if(dayCell.className === 'green'){
         dayCell.className = 'white'
-       
         document.getElementById('fecha').value = ''
     }else{
-        dayCell.className = 'blue'
+        dayCell.className = 'green'
         day = dayCell.innerHTML
         if(dayCell.innerHTML < 10){
             day = '0'+ dayCell.innerHTML
         }
-        document.getElementById('fecha').value = anio +'-' + (mes === 0 ? 12 : mes) + '-' + day
+        document.getElementById('fecha').value = anio +'-' + (mes === 0 ? 12 : (mes < 10 ? '0' + mes : mes)) + '-' + day
     }
 
     dayCellAnterior = dayCell    
@@ -452,11 +500,35 @@ function changeColor(dayCell) {
 async function diasSinCitas(firstDay, daysInMonth, month, year){
     try {
         const objeto = {
-            fechaInicio: year + '-' + month + '-' + firstDay,
+            fechaInicio: year + '-' + month + '-0' + firstDay,
             fechaFin: year + '-' + month + '-' + daysInMonth
         }
-      
+
         const datos = await consultar('cita/CalendarioNoDisponible', 'POST', objeto); 
+      
+        if(typeof datos === 'undefined' || datos === null){
+            controlarModalPersona(true)
+            return
+        }
+
+        return datos
+    }catch(e){
+		mostrarNotificacion("Error: " + e,"#FF0000")  
+		console.error('Error:', e);
+	}
+}
+
+async function citasPersona(firstDay, daysInMonth, month, year){
+    try {
+        let datosPersona = JSON.parse(localStorage.getItem('persona'));
+
+        const objeto = {
+            cedula: datosPersona.cedula,
+            fechaInicio: year + '-' + month + '-0' + firstDay,
+            fechaFin: year + '-' + month + '-' + daysInMonth
+        }
+
+        const datos = await consultar('cita/ObtenerCitasPersonaPorRangoFechas', 'POST', objeto); 
       
         if(typeof datos === 'undefined' || datos === null){
             controlarModalPersona(true)

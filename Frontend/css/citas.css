@@ -2,12 +2,12 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: #ffffff;
 }
 
 .calendar div {
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -40,11 +40,15 @@
 .blue { 
     background-color: #275ae6; 
     color: white;
+    cursor: default;
+    pointer-events: none;
 }
 
 .gray { 
     background-color: #6c757d; 
     color: white;
+    cursor: default;
+    pointer-events: none;
 }
 
 .inactive {

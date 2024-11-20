@@ -228,13 +228,13 @@ function CargarNavbar(pagina){
                         <a class="nav-link ${pagina.indexOf('somos.html') !== -1 ? 'active' : ''}" href="somos.html">Quienes somos</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('galeria.html') !== -1 ? 'active' : ''}" href="galeria.html">Galeria</a>
+                        <a class="nav-link ${pagina.indexOf('consejos.html') !== -1 ? 'active' : ''}" href="consejos.html">Consejos deltal</a>
                     </li>
                     <li class="nav-item mx-1">
                         <a class="nav-link ${pagina.indexOf('servicios.html') !== -1 ? 'active' : ''}" href="servicios.html">Servicios</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link ${pagina.indexOf('consejos.html') !== -1 ? 'active' : ''}" href="consejos.html">Consejos deltal</a>
+                        <a class="nav-link ${pagina.indexOf('galeria.html') !== -1 ? 'active' : ''}" href="galeria.html">Galeria</a>
                     </li>
                     <li class="nav-item mx-1" style="background-color: #4d0aa7; border-radius: 10px !important;">
                         <a class="nav-link text-white ${pagina.indexOf('citas.html') !== -1 ? 'active' : ''}" href="citas.html">RESERVACION DE CITAS</a>
