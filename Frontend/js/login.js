@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 		}
 	}
 	localStorage.removeItem('usuarioRegistrado');
+	localStorage.removeItem('persona');
 });
 
 // Funcion que valida los campos del formulario del login y registro

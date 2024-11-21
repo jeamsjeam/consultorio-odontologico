@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     await CrearModalePersona()
     await buscarPersona()
     await ObtenerSelect('servicio','servicios-select','Error al cargar los servicios')
-
-    await populateMonthAndYear();
+    let persona = JSON.parse(localStorage.getItem('persona'));
+    if(typeof persona !== 'undefined' && persona !== null){
+        await populateMonthAndYear();
+    }
     
 });
 
@@ -184,6 +186,8 @@ async function registrarPersona(){
         fechaNacimiento.value = ""
         municipio.value = 1
     
+        await populateMonthAndYear();
+
         controlarModalPersona(false)
 
         mostrarNotificacion("Persona registrada ","linear-gradient(to right, #00b09b, #96c93d)"); 
@@ -239,6 +243,8 @@ async function DatosTabla(){
         let data = await consultar("cita/ObtenerPorCedulaMenosBorradas/" + datosPersona.cedula, 'GET', null);
         if(typeof data === 'undefined' || data === null || data.length === 0){
             mostrarNotificacion("No se encontro ningun " + error,"#FF0000") 
+            initDataTable([])
+            return
         }
 
         initDataTable(data.sort((a, b) => new Date(b.fecha.fecha) - new Date(a.fecha.fecha)))

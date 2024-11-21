@@ -63,12 +63,13 @@ async function consultarCitas(mensaje){
         const datos = await consultar('cita/ObtenerCitasPorRangoFechas', 'POST', objeto); 
 
         if(typeof datos === 'undefined' || datos === null || datos.length === 0){
-            mostrarNotificacion("No se pudo cambiar el estado a la cita","#FF0000") 
+            initDataTable([])
+            mostrarNotificacion("No se encontraron citas","#FF0000") 
             return
         }
 
         if(mensaje){
-            mostrarNotificacion("Se cambio el estado de la cita","linear-gradient(to right, #00b09b, #96c93d)"); 
+            mostrarNotificacion("Citas encontradas","linear-gradient(to right, #00b09b, #96c93d)"); 
         }
 
         initDataTable(datos.sort((a, b) => new Date(b.fecha.fecha) - new Date(a.fecha.fecha)))

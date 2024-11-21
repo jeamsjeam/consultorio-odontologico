@@ -14,7 +14,7 @@ async function consultarPacientes(){
         }
         mostrarNotificacion("Pacientes encontrados","linear-gradient(to right, #00b09b, #96c93d)"); 
 
-        initDataTable(datos.sort((a, b) => new Date(b.fecha.fecha) - new Date(a.fecha.fecha)))
+        initDataTable(datos)
 
     }catch(e){
         mostrarNotificacion("Error: " + e,"#FF0000")  
